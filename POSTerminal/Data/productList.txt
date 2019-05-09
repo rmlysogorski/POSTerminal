@@ -1,0 +1,6 @@
+coffee|beverage|1.99|A cup of our delicious coffee.
+large coffee|beverage|2.49|Even more of our delicious coffee.
+decaf coffee|beverage|1.99|Same great taste sans caffeine.
+large decaf coffee|beverage|2.49|Even more delicious coffee without caffeine.
+brownie|food|1.99|A tasty brownie like mom used to bake!
+cookie|food|1.99|A warm, soft freshly baked chocolate chip cookie.

@@ -55,7 +55,7 @@ namespace POSTerminal
 
         public Order() { }
 
-        public Order(List<string> _purchaseList, double _subtotal, string _payType, double _tax, double _total, DateTime _date, int _orderNumber)
+        public Order(List<Product> _purchaseList, double _subtotal, string _payType, double _tax, double _total, DateTime _date, int _orderNumber)
         {
             purchaseList = _purchaseList;
             subtotal = _subtotal;

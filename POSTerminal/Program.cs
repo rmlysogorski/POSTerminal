@@ -1,8 +1,5 @@
-﻿using System;
+﻿using POSTerminal.Data;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace POSTerminal
 {
@@ -10,6 +7,12 @@ namespace POSTerminal
     {
         static void Main(string[] args)
         {
+            List<Product> productList = FileIO.GetDataFile();
+
+            foreach(Product p in productList)
+            {
+                System.Console.WriteLine(p.Name);
+            }
         }
     }
 }
