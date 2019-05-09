@@ -55,11 +55,12 @@ namespace POSTerminal
                     case 1:
                         AddProductToCart();
                         break;
-                    case 2: //RemoveProductFromCart();
+                    case 2:
+                        RemoveProductFromCart();
                         break;
                     case 3:
                         proceed = false;
-                        //ProccesPayment();
+                        ProcessPayment();
                         break;
                     default:
                         Console.WriteLine("Invalid Selection");
@@ -82,39 +83,42 @@ namespace POSTerminal
 
         }
 
-        //public void RemoveProductFromCart()
-        //{
-        //    IView productListView = new ProductListView(myOrder.purchaseList);
-        //    productListView.Display();
-        //    string input = Console.ReadLine();
-        //    int quantity = Console.ReadLine();
-        //    for (int i = 0; i < quantity; i++)
-        //    {
-        //        myOrder.purchaseList.Remove(productList[input]);
-        //    }
-        //}
+        public void RemoveProductFromCart()
+        {
+            IView productListView = new ProductListView(myOrder.PurchaseList);
+            productListView.Display();
+            int input = int.Parse(Console.ReadLine()); //Needs Validation!
+            int quantity = int.Parse(Console.ReadLine()); //Needs Validation!
+            for (int i = 0; i < quantity; i++)
+            {
+                myOrder.PurchaseList.Remove(productList[input]);
+            }
+        }
 
-        //public void ProcessPayment()
-        //{
-        //    IView paymentView = new PaymentView(myOrder);
-        //    paymentView.Display();
-        //    string input = Console.ReadLine(); //Needs Validation!!!
-        //    switch (input)
-        //    {
-        //        case 1:
-        //            IView cashView = new CashView(myOrder);
-        //            cashView.Display();
-        //        case 2:
-        //            IView creditView = new CreditView(myOrder);
-        //            creditView.Display();
-        //        case 3:
-        //            IView checkView = new CheckView(myOrder);
-        //            checkView.Display();
-        //        default:
-        //            Console.WriteLine("Invalid Selection");
-        //            break;
-        //    }
-        //}
+        public void ProcessPayment()
+        {
+            IView paymentView = new PaymentView(myOrder);
+            paymentView.Display();
+            int input = int.Parse(Console.ReadLine()); //Needs Validation!!!
+            switch (input)
+            {
+                case 1:
+                    IView cashView = new CashView(myOrder);
+                    cashView.Display();
+                    break;
+                case 2:
+                    IView creditView = new CreditCardView(myOrder);
+                    creditView.Display();
+                    break;
+                case 3:
+                    IView checkView = new CheckView(myOrder);
+                    checkView.Display();
+                    break;
+                default:
+                    Console.WriteLine("Invalid Selection");
+                    break;
+            }
+        }
 
     }
 

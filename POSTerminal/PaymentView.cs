@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace POSTerminal
 {
@@ -13,7 +9,12 @@ namespace POSTerminal
         public Order MyOrder
         {
             get { return myOrder; }
-            set { myOrder = value;  }
+            set { myOrder = value; }
+        }
+
+        public PaymentView(Order _myOrder)
+        {
+            myOrder = _myOrder;
         }
 
         public void Display()
