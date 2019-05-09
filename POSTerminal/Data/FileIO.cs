@@ -14,18 +14,18 @@ namespace POSTerminal.Data
             string binaryPath = Path.GetDirectoryName(System.Reflection.Assembly.GetEntryAssembly().Location) + fileName;
 
             StreamReader myFile = new StreamReader(binaryPath);
-            
+
             try
             {
-                string line; //stores the file data for one line
+                string line;
 
-                while ((line = myFile.ReadLine()) != null) //while line exists
+                while ((line = myFile.ReadLine()) != null)
                 {
-                    Product productToAdd = new Product(line.Split('|')[0], line.Split('|')[1], double.Parse(line.Split('|')[2]), line.Split('|')[3]); //Create a dummy Country 
-                    productList.Add(productToAdd); //Put the Country in the list 
+                    Product productToAdd = new Product(line.Split('|')[0], line.Split('|')[1], double.Parse(line.Split('|')[2]), line.Split('|')[3]);
+                    productList.Add(productToAdd);
                 }
             }
-            catch(System.Exception)
+            catch (System.Exception)
             {
                 throw new System.Exception("There was an error reading the product list files...");
             }
@@ -48,7 +48,7 @@ namespace POSTerminal.Data
 
             try
             {
-                myFileWriter.WriteLine(product.Name + delimiter + product.Category + delimiter + product.Price + delimiter + product.Description);  
+                myFileWriter.WriteLine(product.Name + delimiter + product.Category + delimiter + product.Price + delimiter + product.Description);
             }
             catch (System.Exception)
             {

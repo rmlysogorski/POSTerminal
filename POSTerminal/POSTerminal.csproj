@@ -44,6 +44,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Data\FileIO.cs" />
+    <Compile Include="Model\Cash.cs" />
+    <Compile Include="Model\Check.cs" />
+    <Compile Include="Model\Credit.cs" />
+    <Compile Include="Model\Payment.cs" />
     <Compile Include="Views\AddProductView.cs" />
     <Compile Include="Views\CartView.cs" />
     <Compile Include="Views\CashView.cs" />
