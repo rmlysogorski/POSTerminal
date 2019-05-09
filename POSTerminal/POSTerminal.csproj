@@ -43,8 +43,20 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AddProductView.cs" />
+    <Compile Include="CartView.cs" />
+    <Compile Include="CashView.cs" />
+    <Compile Include="CheckView.cs" />
+    <Compile Include="CreditCardView.cs" />
+    <Compile Include="IView.cs" />
+    <Compile Include="MenuView.cs" />
+    <Compile Include="Order.cs" />
+    <Compile Include="Product.cs" />
+    <Compile Include="ProductListView.cs" />
+    <Compile Include="PaymentView.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ReceiptView.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
