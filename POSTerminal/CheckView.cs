@@ -9,7 +9,13 @@ namespace POSTerminal
     class CheckView : IView
     {
 
-        private string checkNumber;
+        private string checkNumber; private Order myOrder;
+
+        public Order MyOrder
+        {
+            get { return myOrder; }
+            set { myOrder = value; }
+        }
 
         public string CheckNumber
         {
@@ -17,10 +23,11 @@ namespace POSTerminal
             set { checkNumber = value; }
         }
 
-        public CheckView()
+        public CheckView(Order _myOrder)
         {
-
+            myOrder = _myOrder;
         }
+
         public void Display()
         {
             throw new NotImplementedException();

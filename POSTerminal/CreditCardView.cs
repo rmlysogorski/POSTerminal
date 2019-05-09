@@ -10,7 +10,13 @@ namespace POSTerminal
     {
         private string  cardNumber;
         private int cvv;
-        private DateTime expirationDate;
+        private DateTime expirationDate; private Order myOrder;
+
+        public Order MyOrder
+        {
+            get { return myOrder; }
+            set { myOrder = value; }
+        }
 
         public string CardNumber
         {
@@ -30,9 +36,9 @@ namespace POSTerminal
             set { expirationDate = value; }
         }
 
-        public CreditCardView()
+        public CreditCardView(Order _myOrder)
         {
-
+            myOrder = _myOrder;
         }
 
         public void Display()

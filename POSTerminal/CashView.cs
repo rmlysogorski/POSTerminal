@@ -9,9 +9,14 @@ namespace POSTerminal
     class CashView : IView
     {
         private double amountTendered;
-        private double change;
+        private double change; private Order myOrder;
 
-        
+        public Order MyOrder
+        {
+            get { return myOrder; }
+            set { myOrder = value; }
+        }
+
         public double AmountTendered
         {
             get { return amountTendered; }
@@ -24,9 +29,9 @@ namespace POSTerminal
             set { change = value; }
         }
 
-        public CashView()
+        public CashView(Order _myOrder)
         {
-            
+            myOrder = _myOrder;
         }
 
         public void Display()

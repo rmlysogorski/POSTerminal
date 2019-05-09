@@ -15,7 +15,7 @@ namespace POSTerminal
         public CartView(Order _myOrder)
         {
             myOrder = _myOrder;
-        }
+        }        
 
         public void Display()
         {
