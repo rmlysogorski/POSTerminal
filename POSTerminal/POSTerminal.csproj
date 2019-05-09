@@ -50,13 +50,12 @@
     <Compile Include="Model\Payment.cs" />
     <Compile Include="Views\AddProductView.cs" />
     <Compile Include="Views\CartView.cs" />
-    <Compile Include="Views\CashView.cs" />
-    <Compile Include="Views\CheckView.cs" />
-    <Compile Include="Views\CreditCardView.cs" />
+    <Compile Include="Views\IMessageView.cs" />
     <Compile Include="Views\IView.cs" />
     <Compile Include="Views\MenuView.cs" />
     <Compile Include="Model\Order.cs" />
     <Compile Include="Controllers\OrderController.cs" />
+    <Compile Include="Views\MessageView.cs" />
     <Compile Include="Views\OrderListView.cs" />
     <Compile Include="Views\PaymentView.cs" />
     <Compile Include="Model\Product.cs" />

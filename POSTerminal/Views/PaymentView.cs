@@ -19,7 +19,10 @@ namespace POSTerminal
 
         public void Display()
         {
-            throw new NotImplementedException();
+            Console.WriteLine($"Subtotal: {myOrder.Subtotal:C2} ");
+            Console.WriteLine($"Tax: {myOrder.Tax:C2} ");
+            Console.WriteLine($"Total: {myOrder.Total:C2} ");
+            Console.WriteLine($"Enter payment method: 1: Cash, 2: Credit, 3: Check");
         }
     }
 }
