@@ -73,12 +73,12 @@ namespace POSTerminal
         {
             IView productListView = new ProductListView(productList);
             productListView.Display();
-            string input = Console.ReadLine(); //Needs Validation!
-            //int quantity = Console.ReadLine(); //Needs Validation!
-            //for (int i = 0; i < quantity; i++)
-            //{
-            //    myOrder.purchaseList.Add(productList[input]);
-            //}
+            int input = int.Parse(Console.ReadLine()); //Needs Validation!
+            int quantity = int.Parse(Console.ReadLine()); //Needs Validation!
+            for (int i = 0; i < quantity; i++)
+            {
+                myOrder.PurchaseList.Add(productList[input]);
+            }
 
         }
 

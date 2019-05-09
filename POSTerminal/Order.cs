@@ -5,7 +5,7 @@ namespace POSTerminal
 {
     class Order
     {
-        private List<string> purchaseList;
+        private List<Product> purchaseList;
         private double subtotal;
         private string payType;
         private double tax;
@@ -13,7 +13,7 @@ namespace POSTerminal
         private DateTime date;
         private int orderNumber;
 
-        public List<string> PurchaseList
+        public List<Product> PurchaseList
         {
             set { purchaseList = value; }
             get { return purchaseList; }
