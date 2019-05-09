@@ -6,10 +6,11 @@ using System.Threading.Tasks;
 
 namespace POSTerminal
 {
-    class Program
+    class MenuView : IView
     {
-        static void Main(string[] args)
+        public void Display()
         {
+            throw new NotImplementedException();
         }
     }
 }

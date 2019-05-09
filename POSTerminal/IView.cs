@@ -6,10 +6,8 @@ using System.Threading.Tasks;
 
 namespace POSTerminal
 {
-    class Program
+    interface IView
     {
-        static void Main(string[] args)
-        {
-        }
+        void Display();
     }
 }
