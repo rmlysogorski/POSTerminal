@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace POSTerminal.Views
+namespace POSTerminal
 {
-    class OrderListView
+    class OrderListView :IView
     {
         private Order myOrder;
 
