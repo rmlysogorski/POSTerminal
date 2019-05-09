@@ -43,22 +43,23 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AddProductView.cs" />
-    <Compile Include="CartView.cs" />
-    <Compile Include="CashView.cs" />
-    <Compile Include="CheckView.cs" />
-    <Compile Include="CreditCardView.cs" />
-    <Compile Include="IView.cs" />
-    <Compile Include="MenuView.cs" />
-    <Compile Include="Order.cs" />
-    <Compile Include="OrderController.cs" />
-    <Compile Include="PaymentView.cs" />
-    <Compile Include="Product.cs" />
-    <Compile Include="ProductListView.cs" />
+    <Compile Include="Views\AddProductView.cs" />
+    <Compile Include="Views\CartView.cs" />
+    <Compile Include="Views\CashView.cs" />
+    <Compile Include="Views\CheckView.cs" />
+    <Compile Include="Views\CreditCardView.cs" />
+    <Compile Include="Views\IView.cs" />
+    <Compile Include="Views\MenuView.cs" />
+    <Compile Include="Model\Order.cs" />
+    <Compile Include="Controllers\OrderController.cs" />
+    <Compile Include="Views\OrderListView.cs" />
+    <Compile Include="Views\PaymentView.cs" />
+    <Compile Include="Model\Product.cs" />
+    <Compile Include="Views\ProductListView.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="ReceiptView.cs" />
-    <Compile Include="Tax.cs" />
+    <Compile Include="Views\ReceiptView.cs" />
+    <Compile Include="Model\Tax.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

@@ -19,7 +19,7 @@ namespace POSTerminal
 
         public void Display()
         {
-            throw new NotImplementedException();
+            
         }
     }
 }

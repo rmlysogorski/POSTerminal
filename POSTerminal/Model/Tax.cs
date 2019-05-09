@@ -6,11 +6,16 @@ using System.Threading.Tasks;
 
 namespace POSTerminal
 {
-    class MenuView : IView
+    public sealed class Tax
     {
-        public void Display()
-        {
-            throw new NotImplementedException();
+        private Tax()
+        {            
         }
+
+        public static double tax
+        {
+            get { return 0.06; }
+        }
+
     }
 }

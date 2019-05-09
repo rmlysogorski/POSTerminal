@@ -12,7 +12,7 @@ namespace POSTerminal
         private string category;
         private double price;
         private string description;
-        private int cost;
+        private int qty;
 
         public string Name
         {
@@ -38,13 +38,18 @@ namespace POSTerminal
             get { return description; }
         }
 
-
-        public Product(string _name, string _category, double _price, string _description)
+        public int Qty
+        {
+            set { qty = value; }
+            get { return qty; }
+        }
+        public Product(string _name, string _category, double _price, string _description, int _qty = 1)
         {
             name = _name;
             price = _price;
             category = _category;
             description = _description;
+            qty = _qty;
         }
 
     }
