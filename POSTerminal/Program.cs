@@ -9,11 +9,16 @@ namespace POSTerminal
         static void Main(string[] args)
         {
             List<Product> productList = FileIO.GetDataFile();
+            OrderController orderController = new OrderController(productList);
 
-            foreach (Product p in productList)
-            {
-                System.Console.WriteLine(p.Name);
-            }
+            orderController.WelcomeAction();
+
+            //foreach (Product p in productList)
+            //{
+            //    System.Console.WriteLine(p.Name);
+            //}
+
+
         }
     }
 }

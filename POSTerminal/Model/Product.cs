@@ -37,7 +37,7 @@
             set { qty = value; }
             get { return qty; }
         }
-        public Product(string _name, string _category, double _price, string _description, int _qty = 1)
+        public Product(string _name, string _category, double _price, string _description, int _qty = 0)
         {
             name = _name;
             price = _price;
