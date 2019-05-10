@@ -26,7 +26,7 @@ namespace POSTerminal
             int count = 1;
             foreach(Product p in productList)
             {
-                Console.WriteLine($"{count}: {p.Name}");
+                Console.WriteLine($"{count}: {p.Name} ({p.Price:C2})");
                 count++;
             }
         }
