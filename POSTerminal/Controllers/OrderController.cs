@@ -34,18 +34,34 @@ namespace POSTerminal
         public void WelcomeAction()
         {
             IView menuView = new MenuView();
-            menuView.Display();
-            int input = UserInput.GetUserInputAsInteger("");
-            switch (input)
+            bool repeat = true;
+
+            while (repeat)
             {
-                case 1:
-                    CheckoutAction();
-                    break;
-                case 2: //SalesHistoryAction();
-                    break;
-                default:
-                    Console.WriteLine("Invalid Selection");
-                    break;
+                menuView.Display();
+                int input = UserInput.GetUserInputAsInteger("");
+
+                switch (input)
+                {
+                    case 1:
+                        CheckoutAction();
+                        break;
+                    case 2: //SalesHistoryAction();
+                        break;
+
+                    case 3:
+                        new MessageView().Display("Are you sure (Y/N)? ");
+
+                        if (UserInput.UserConfirmationPrompt(""))
+                        {
+                            repeat = false;
+                        }
+                        break;
+
+                    default:
+                        Console.WriteLine("Invalid Selection");
+                        break;
+                }
             }
         }
 
@@ -86,105 +102,142 @@ namespace POSTerminal
             ProductListView productListView = new ProductListView(productList);
             IMessage view = new MessageView();
             int quantity = 0;
-            view.display("1: Search By Name\n2: Search By Category\n3: List All Products");
+            view.Display("1: Search By Name\n2: Search By Category\n3: List All Products\n4: Go Back\n\nMake a selection: ");
             int input = UserInput.GetUserInputAsInteger("");
+            bool goBack = false;
 
-            switch (input)
+            while (!goBack)
             {
-                case 1:
 
-                    view.display("Enter product name: ");
-                    string name = UserInput.GetUserInput("");
-                    ProductListView filteredList = new ProductListView(productListView.GetFilteredList("name", name));
-                    filteredList.Display();
-                    view.display(string.Format("\nChoose a product (1-{0})", filteredList.ProductList.Count));
-                    input = UserInput.GetUserInputAsInteger("");
-                    input--;
-                    view.display("Enter Quantity: ");
-                    quantity = UserInput.GetUserInputAsIntegerOrReturnOne("");
+                switch (input)
+                {
+                    case 1:
+                        goBack = true;
+                        view.Display("Enter product name: ");
+                        string name = UserInput.GetUserInput("");
+                        ProductListView filteredList = new ProductListView(productListView.GetFilteredList("name", name));
 
+                        filteredList.Display();
+                        view.Display(string.Format("\nChoose a product (1-{0}): ", filteredList.ProductList.Count));
+                        input = UserInput.GetUserInputAsInteger("");
+                        input--;
+                        view.Display("Enter Quantity: ");
+                        quantity = UserInput.GetUserInputAsIntegerOrReturnOne("");
 
-                    if (myOrder.PurchaseList.Contains(filteredList.ProductList[input]))
-                    {
-                        myOrder.PurchaseList.Find(x => x.Name == filteredList.ProductList[input].Name).Qty += quantity;
-                    }
-                    else
-                    {
+                        if (myOrder.PurchaseList.Contains(filteredList.ProductList[input]))
+                        {
+                            myOrder.PurchaseList.Find(x => x.Name == filteredList.ProductList[input].Name).Qty += quantity;
+                        }
+                        else
+                        {
+                            filteredList.ProductList[input].Qty += quantity;
+                            myOrder.PurchaseList.Add(filteredList.ProductList[input]);
+                        }
 
-                        myOrder.PurchaseList.Add(filteredList.ProductList[input]);
-                        myOrder.PurchaseList.Find(x => x.Name == filteredList.ProductList[input].Name).Qty += quantity;
-
-                    }
-
-                    break;
-                case 2:
-                    view.display("Enter product category: ");
-                    string category = UserInput.GetUserInput("");
-                    ProductListView filteredListByCat = new ProductListView(productListView.GetFilteredList("category", category));
-                    filteredListByCat.Display();
-                    view.display(string.Format("\nChoose a product (1-{0})", filteredListByCat.ProductList.Count));
-                    input = UserInput.GetUserInputAsInteger("");
-                    input--;
-                    view.display("Enter Quantity: ");
-                    quantity = UserInput.GetUserInputAsIntegerOrReturnOne("");
-
-
-                    if (myOrder.PurchaseList.Contains(filteredListByCat.ProductList[input]))
-                    {
-                        myOrder.PurchaseList.Find(x => x.Name == filteredListByCat.ProductList[input].Name).Qty += quantity;
-                    }
-                    else
-                    {
-
-                        myOrder.PurchaseList.Add(filteredListByCat.ProductList[input]);
-                        myOrder.PurchaseList.Find(x => x.Name == filteredListByCat.ProductList[input].Name).Qty += quantity;
-
-                    }
-
-                    break;
-                case 3:
-                    productListView.Display();
-                    view.display(string.Format("\nChoose a product (1-{0})", productList.Count));
-                    input = UserInput.GetUserInputAsInteger("");
-                    input--;
-                    view.display("Enter Quantity: ");
-                    quantity = UserInput.GetUserInputAsIntegerOrReturnOne("");
+                        break;
+                    case 2:
+                        goBack = true;
+                        view.Display("Enter product category: ");
+                        string category = UserInput.GetUserInput("");
+                        ProductListView filteredListByCat = new ProductListView(productListView.GetFilteredList("category", category));
+                        filteredListByCat.Display();
+                        view.Display(string.Format("\nChoose a product (1-{0})", filteredListByCat.ProductList.Count));
+                        input = UserInput.GetUserInputAsInteger("");
+                        input--;
+                        view.Display("Enter Quantity: ");
+                        quantity = UserInput.GetUserInputAsIntegerOrReturnOne("");
 
 
-                    if (myOrder.PurchaseList.Contains(productList[input]))
-                    {
-                        myOrder.PurchaseList.Find(x => x.Name == productList[input].Name).Qty += quantity;
-                    }
-                    else
-                    {
+                        if (myOrder.PurchaseList.Contains(filteredListByCat.ProductList[input]))
+                        {
+                            myOrder.PurchaseList.Find(x => x.Name == filteredListByCat.ProductList[input].Name).Qty += quantity;
+                        }
+                        else
+                        {
 
-                        myOrder.PurchaseList.Add(productList[input]);
-                        myOrder.PurchaseList.Find(x => x.Name == productList[input].Name).Qty += quantity;
+                            myOrder.PurchaseList.Add(filteredListByCat.ProductList[input]);
+                            myOrder.PurchaseList.Find(x => x.Name == filteredListByCat.ProductList[input].Name).Qty += quantity;
 
-                    }
+                        }
 
-                    break;
+                        break;
+                    case 3:
+                        goBack = true;
+                        productListView.Display();
+                        view.Display(string.Format("\nChoose a product (1-{0})", productList.Count));
+                        input = UserInput.GetUserInputAsInteger("");
+                        input--;
+                        view.Display("Enter Quantity: ");
+                        quantity = UserInput.GetUserInputAsIntegerOrReturnOne("");
 
-                default:
 
-                    break;
+                        if (myOrder.PurchaseList.Contains(productList[input]))
+                        {
+                            myOrder.PurchaseList.Find(x => x.Name == productList[input].Name).Qty += quantity;
+                        }
+                        else
+                        {
+                            myOrder.PurchaseList.Add(productList[input]);
+                            myOrder.PurchaseList.Find(x => x.Name == productList[input].Name).Qty += quantity;
+                        }
 
+                        break;
+
+                    case 4:
+                        goBack = true;
+                        break;
+
+                    default:
+
+                        break;
+
+                }
             }
 
         }
 
         public void RemoveProductFromCart()
         {
-            IView productListView = new ProductListView(myOrder.PurchaseList);
-            productListView.Display();
-            int input = UserInput.GetUserInputAsInteger("");
-            int quantity = UserInput.GetUserInputAsInteger("");
-            for (int i = 0; i < quantity; i++)
+            if (myOrder.PurchaseList.Count > 0)
             {
-                myOrder.PurchaseList.Remove(productList[input]);
-                myOrder.Subtotal -= productList[input].Price;
+                IView productListView = new ProductListView(myOrder.PurchaseList);
+                productListView.Display();
+
+                new MessageView().Display($"Enter item#(1-{myOrder.PurchaseList.Count}): ");
+                int input = UserInput.GetUserInputAsInteger("");
+                
+                while (input <= 0 || input > myOrder.PurchaseList.Count)
+                {
+                    input = UserInput.GetUserInputAsInteger("");
+                }
+                input--;
+                new MessageView().Display("Quantity(Press ENTER to delete 1): ");
+                int quantity = UserInput.GetUserInputAsIntegerOrReturnOne("");
+                string nameOfItem = myOrder.PurchaseList[input].Name;
+                Product deletedProduct = myOrder.PurchaseList.Find(x => x.Name == nameOfItem);
+
+                if (deletedProduct.Qty == quantity)
+                {
+                    for(int i =0; i < quantity; i++)
+                    {
+                        myOrder.Subtotal -= deletedProduct.Price;
+                    }
+                    myOrder.PurchaseList.Remove(deletedProduct);                    
+                }
+                else
+                {
+                    for (int i = 0; i < quantity; i++)
+                    {
+                        deletedProduct.Qty--;
+                        myOrder.Subtotal -= deletedProduct.Price;
+                    }
+                }
+                myOrder.Tax = myOrder.Subtotal * Tax.tax;
             }
-            myOrder.Tax = myOrder.Subtotal * Tax.tax;
+            else
+            {
+                new MessageView().Display("No items in current checkout....\n\n");
+            }
         }
 
         public void ProcessPayment()
