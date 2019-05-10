@@ -8,6 +8,6 @@ namespace POSTerminal
 {
     interface IMessage
     {
-        void display(string message);
+        void Display(string message);
     }
 }

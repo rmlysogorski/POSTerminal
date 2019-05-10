@@ -8,7 +8,7 @@ namespace POSTerminal
 {
     class MessageView : IMessage
     {
-        public void display(string message)
+        public void Display(string message)
         {
             Console.Write(message);
         }
