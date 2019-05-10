@@ -164,5 +164,156 @@ namespace POSTerminal
                 Display(e.Source);
             }
         }
+
+        public static double GetUserInputAsDouble(string message)
+        {
+            Display(message);
+            string input = Console.ReadLine();
+
+            if (input == string.Empty)
+            {
+                return GetUserInputAsDouble(message);
+            }
+            try
+            {
+                return double.Parse(input);
+            }
+            catch (Exception)
+            {
+                Display("Please enter a number with a decimal point.");
+                return GetUserInputAsDouble(message);
+            }
+        }
+
+        public static string GetCreditCardNumber()
+        {
+            string error = "Please enter the credit card number: ";
+            string input = Console.ReadLine();
+
+            if(input == string.Empty)
+            {
+                Display(error);
+                return GetCreditCardNumber();
+            }
+            else if (!Regex.IsMatch(input, @"^(\s*)(\d){4}(\s*)(\d){4}(\s*)(\d){4}(\s*)$"))
+            {
+                Display(error);
+                return GetCreditCardNumber();
+            }
+            else
+            {
+                return input;
+            }
+        }
+
+        public static DateTime GetCreditCardExpiration()
+        {
+            string error = "Please enter the credit card's expiration date (MM/YYYY): ";
+            string input = Console.ReadLine();
+
+            if (input == string.Empty)
+            {
+                Display(error);
+                return GetCreditCardExpiration();
+            }
+            else if (!Regex.IsMatch(input, @"^(\s*)(\d){2}(\s*)(\/){1}(\s*)(\d){4}(\s*)$"))
+            {
+                Display(error);
+                return GetCreditCardExpiration();
+            }
+            else
+            {
+                try
+                {
+                    return DateTime.Parse(input);
+                }
+                catch (Exception)
+                {
+                    Display(error);
+                    return GetCreditCardExpiration();
+                }
+                
+            }
+        }
+
+        public static int GetCreditCardCVV()
+        {
+            string error = "Please enter the credit card's CVV: ";
+            string input = Console.ReadLine();
+
+            if (input == string.Empty)
+            {
+                Display(error);
+                return GetCreditCardCVV();
+            }
+            else if (!Regex.IsMatch(input, @"^(\s*)(\d){3}(\s*)$"))
+            {
+                Display(error);
+                return GetCreditCardCVV();
+            }
+            else
+            {
+                try
+                {
+                    return int.Parse(input);
+                }
+                catch (Exception)
+                {
+                    Display(error);
+                    return GetCreditCardCVV();
+                }
+
+            }
+        }
+
+        public static double GetCashBack()
+        {
+            string error = "Please enter cash back amount (press enter or input 0 to skip): ";
+            string input = Console.ReadLine();
+
+            if (input == string.Empty)
+            {
+                return 0;
+            }
+            else if (!Regex.IsMatch(input, @"^(\s*)([0-9$. ])+(\s*)$"))
+            {
+                Display(error);
+                return GetCashBack();
+            }
+            else
+            {
+                try
+                {
+                    return double.Parse(input);
+                }
+                catch (Exception)
+                {
+                    Display(error);
+                    return GetCashBack();
+                }
+
+            }
+        }
+
+        public static string GetCheckNumber()
+        {
+            string error = "Please enter the check number: ";
+            string input = Console.ReadLine();
+
+            if (input == string.Empty)
+            {
+                Display(error);
+                return GetCheckNumber();
+            }
+            else if (!Regex.IsMatch(input, @"^(\s*)([0-9]){5}(\s*)$"))
+            {
+                Display(error);
+                return GetCheckNumber();
+            }
+            else
+            {
+                return input;
+            }
+        }
     }
 }
