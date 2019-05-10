@@ -12,3 +12,4 @@ bottled water|beverage|1.25|Gotta stay hydrated!
 bagel|food|1.99|Goes great with cream cheese!
 hot cocoa|beverage|1.49|A cup of hot chocolate.
 baklava|food|2.99|A middle eastern treat.
+bacon, egg & cheese croissant|food|4.99|A fresh baked croissant topped with bacon eggs & cheese.
