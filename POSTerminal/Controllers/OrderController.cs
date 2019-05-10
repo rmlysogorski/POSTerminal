@@ -38,6 +38,7 @@ namespace POSTerminal
 
             while (repeat)
             {
+                myOrder = new Order();
                 menuView.Display();
                 int input = UserInput.GetUserInputAsInteger("");
 
@@ -211,7 +212,7 @@ namespace POSTerminal
 
                 new MessageView().Display($"Enter item#(1-{myOrder.PurchaseList.Count}): ");
                 int input = UserInput.GetUserInputAsInteger("");
-                
+
                 while (input <= 0 || input > myOrder.PurchaseList.Count)
                 {
                     input = UserInput.GetUserInputAsInteger("");
@@ -225,11 +226,11 @@ namespace POSTerminal
 
                 if (deletedProduct.Qty == quantity)
                 {
-                    for(int i =0; i < quantity; i++)
+                    for (int i = 0; i < quantity; i++)
                     {
                         myOrder.Subtotal -= deletedProduct.Price;
                     }
-                    myOrder.PurchaseList.Remove(deletedProduct);                    
+                    myOrder.PurchaseList.Remove(deletedProduct);
                 }
                 else
                 {
@@ -270,8 +271,8 @@ namespace POSTerminal
             {
                 case 1: //Cash - Get amount tendered and calculate change
 
-                    myOrder.PayInfo.PayType = "cash";                    
-                    
+                    myOrder.PayInfo.PayType = "cash";
+
                     do
                     {
                         view.Display($"{myOrder.PayInfo.AmountTenderedMessage}");
@@ -279,19 +280,39 @@ namespace POSTerminal
                         myOrder.PayInfo.Change = myOrder.PayInfo.AmountTendered - myOrder.Total;
 
                     } while (myOrder.PayInfo.AmountTendered < myOrder.Total);
-              
+
                     view.Display($"{myOrder.PayInfo.ChangeMessage} {myOrder.PayInfo.Change:C2}");
                     break;
                 case 2: //Credit - ask for number, expiration and cvv
-                    myOrder.PayInfo.PayType = "credit";
-                    view.Display(myOrder.PayInfo.CreditCardNumberMessage);
-                    myOrder.PayInfo.CardNumber = UserInput.GetCreditCardNumber();
-                    view.Display(myOrder.PayInfo.ExpirationDateMessage);
-                    myOrder.PayInfo.ExpirationDate = UserInput.GetCreditCardExpiration();
+                    string cancel = string.Empty;
+                    do
+                    {
+                        myOrder.PayInfo.PayType = "credit";
+                        view.Display(myOrder.PayInfo.CreditCardNumberMessage);
+                        myOrder.PayInfo.CardNumber = UserInput.GetCreditCardNumber().Replace(" ", "");
+                        view.Display(myOrder.PayInfo.ExpirationDateMessage);
+                        myOrder.PayInfo.ExpirationDate = UserInput.GetCreditCardExpiration();
+                        if (myOrder.PayInfo.ExpirationDate.Year >= DateTime.Now.Year)
+                        {
+                            if (myOrder.PayInfo.ExpirationDate.Month < DateTime.Now.Month)
+                            {
+                                view.Display("This credit card has expired.");
+                                view.Display("Enter r to re-enter the credit card information, enter c to cancel the order: ");
+                                cancel = UserInput.GetUserInput("");
+                                if(cancel.ToLower() != "r")
+                                {
+                                    return;
+                                }
+
+                            }
+                        }
+                    } while (cancel.ToLower() == "r");
+                    
                     view.Display(myOrder.PayInfo.CvvMessage);
                     myOrder.PayInfo.Cvv = UserInput.GetCreditCardCVV();
                     view.Display("Enter cash back (press enter or input 0 to skip): ");
                     myOrder.PayInfo.CashBack = UserInput.GetCashBack();
+                    myOrder.PayInfo.AmountTendered = myOrder.Total + myOrder.PayInfo.CashBack;
                     if (myOrder.PayInfo.CashBack != 0)
                     {
                         view.Display($"{myOrder.PayInfo.CashBackMessage} {myOrder.PayInfo.CashBack}");
@@ -300,7 +321,8 @@ namespace POSTerminal
                 case 3://Check - ask for check number
                     myOrder.PayInfo.PayType = "check";
                     view.Display(myOrder.PayInfo.CheckNumberMessage);
-                    myOrder.PayInfo.CheckNumber = UserInput.GetCheckNumber();
+                    myOrder.PayInfo.CheckNumber = UserInput.GetCheckNumber().Replace(" ", "");
+                    myOrder.PayInfo.AmountTendered = myOrder.Total;
                     break;
                 default:
                     Console.WriteLine("Invalid Selection");

@@ -195,7 +195,7 @@ namespace POSTerminal
                 Display(error);
                 return GetCreditCardNumber();
             }
-            else if (!Regex.IsMatch(input, @"^(\s*)(\d){4}(\s*)(\d){4}(\s*)(\d){4}(\s*)$"))
+            else if (!Regex.IsMatch(input, @"^(\s*)(\d){4}(\s*)(\d){4}(\s*)(\d){4}(\s*)(\d){4}(\s*)$"))
             {
                 Display(error);
                 return GetCreditCardNumber();

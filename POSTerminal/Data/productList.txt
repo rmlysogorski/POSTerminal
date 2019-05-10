@@ -4,3 +4,9 @@ decaf coffee|beverage|1.99|Same great taste sans caffeine.
 large decaf coffee|beverage|2.49|Even more delicious coffee without caffeine.
 brownie|food|1.99|A tasty brownie like mom used to bake!
 cookie|food|1.99|A warm, soft freshly baked chocolate chip cookie.
+muffin|food|2.49|A fresh muffin baked this morning!
+sandwich|food|4.99|Today's special sandwich!
+tea|beverage|1.49|Perfect for tea time!
+decaf tea|beverage|1.49|Relax at tea time without the caffeine.
+bottled water|beverage|1.25|Gotta stay hydrated!
+bagel|food|1.99|Goes great with cream cheese!

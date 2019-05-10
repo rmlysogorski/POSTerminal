@@ -40,31 +40,35 @@ namespace POSTerminal
                 Console.WriteLine($"Change{PrintDots("Change", headerSpacing)}{myOrder.PayInfo.Change:C2}");
                 Console.WriteLine($"\nThank you for shopping at RSJ Coffee House");
             }
-            else if (myOrder.PayInfo.PayType == "credit card")
+            else if (myOrder.PayInfo.PayType == "credit")
             {
                 Console.Write($"RSJ Coffee House\t\tOrder Number: {myOrder.OrderNumber}");
-                Console.WriteLine($"\t\tDate: {DateTime.Now.ToString("yyyyMMddHHmmss")}");
-                Console.WriteLine($"{myOrder.PurchaseList}");
-                Console.WriteLine($"\t\tSubtotal: {myOrder.Subtotal}");
-                Console.WriteLine($"\t\tTax: {myOrder.Tax}");
-                Console.WriteLine($"\t\tTotal:{myOrder.Total}");
-                Console.Write($"\tCard Number: {myOrder.PayInfo.CardNumber}");
-                Console.WriteLine($"\t\tAmount Tendered: {myOrder.PayInfo.AmountTendered}");
-                Console.WriteLine($"\t\tCash Back: {myOrder.PayInfo.CashBack}");
-                Console.WriteLine($"Thank you for shopping at RSJ Coffee House");
+                Console.WriteLine($"\nDate: {DateTime.Now.ToString("MM/dd/yyyy HH:mm:ss")}");
+                IView orderListView = new OrderListView(myOrder);
+                orderListView.Display();
+                Console.WriteLine($"Subtotal{PrintDots("Subtotal", headerSpacing)}{myOrder.Subtotal:C2}");
+                Console.WriteLine($"Tax{PrintDots("Tax", headerSpacing)}{myOrder.Tax:C2}");
+                Console.WriteLine($"Total{PrintDots("Total", headerSpacing)}{myOrder.Total:C2}");
+                Console.WriteLine($"Card Number{PrintDots("Card Number", headerSpacing)}**** **** **** {myOrder.PayInfo.CardNumber.Substring(myOrder.PayInfo.CardNumber.Length -4)}");
+                Console.WriteLine($"Amount Tendered{PrintDots("Amount Tendered", headerSpacing)}{myOrder.PayInfo.AmountTendered:C2}");
+                Console.WriteLine($"Cash Back{PrintDots("Cash Back", headerSpacing)}{myOrder.PayInfo.CashBack}");
+                Console.WriteLine($"\nThank you for shopping at RSJ Coffee House");
             }
             else
             {
                 Console.Write($"RSJ Coffee House\t\tOrder Number: {myOrder.OrderNumber}");
-                Console.WriteLine($"\t\tDate: {DateTime.Now.ToString("yyyyMMddHHmmss")}");
-                Console.WriteLine($"\t{myOrder.PurchaseList}");
-                Console.WriteLine($"\t\tSubtotal: {myOrder.Subtotal}");
-                Console.WriteLine($"\t\tTax: {myOrder.Tax}");
-                Console.WriteLine($"\t\tTotal: {myOrder.Total}");
-                Console.Write($"\tCheck Number: {myOrder.PayInfo.CheckNumber}");
-                Console.WriteLine($"\t\tAmount Tendered: {myOrder.PayInfo.AmountTendered}");
-                Console.WriteLine($"Thank you for shopping at RSJ Coffee House");
+                Console.WriteLine($"\nDate: {DateTime.Now.ToString("MM/dd/yyyy HH:mm:ss")}");
+                IView orderListView = new OrderListView(myOrder);
+                orderListView.Display();
+                Console.WriteLine($"Subtotal{PrintDots("Subtotal", headerSpacing)}{myOrder.Subtotal:C2}");
+                Console.WriteLine($"Tax{PrintDots("Tax", headerSpacing)}{myOrder.Tax:C2}");
+                Console.WriteLine($"Total{PrintDots("Total", headerSpacing)}{myOrder.Total:C2}");
+                Console.WriteLine($"Check Number{PrintDots("Check Number", headerSpacing)}{myOrder.PayInfo.CheckNumber}");
+                Console.WriteLine($"Amount Tendered{PrintDots("Amount Tendered", headerSpacing)}{myOrder.PayInfo.AmountTendered:C2}");
+                Console.WriteLine($"\nThank you for shopping at RSJ Coffee House");
             }
+
+            Console.ReadKey();
         }
 
         public string PrintDots(string header, int length)
