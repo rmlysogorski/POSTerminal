@@ -44,9 +44,21 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Data\FileIO.cs" />
+<<<<<<< HEAD
     <Compile Include="Model\PaymentInfo.cs" />
     <Compile Include="Views\AddProductView.cs" />
     <Compile Include="Views\CartView.cs" />
+=======
+    <Compile Include="Data\UserInput.cs" />
+    <Compile Include="Model\Cash.cs" />
+    <Compile Include="Model\Check.cs" />
+    <Compile Include="Model\Credit.cs" />
+    <Compile Include="Model\Payment.cs" />
+    <Compile Include="Views\AddProductView.cs" />
+    <Compile Include="Views\CartView.cs" />
+    <Compile Include="Views\IMessage.cs" />
+    <Compile Include="Views\MessageView.cs" />
+>>>>>>> 3406df236ebce8672e89eda3427eb76bb4886a50
     <Compile Include="Views\IView.cs" />
     <Compile Include="Views\MenuView.cs" />
     <Compile Include="Model\Order.cs" />
