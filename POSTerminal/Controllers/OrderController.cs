@@ -119,6 +119,7 @@ namespace POSTerminal
                     myOrder.PayInfo.PayType = "cash";
                     Console.WriteLine($"{myOrder.PayInfo.AmountTenderedMessage}");
                     myOrder.PayInfo.AmountTendered = double.Parse(Console.ReadLine());
+                    Console.WriteLine($"{myOrder.PayInfo.ChangeMessage} {myOrder.PayInfo.Change}");
                     break;
                 case 2:
                     myOrder.PayInfo.PayType = "credit";
