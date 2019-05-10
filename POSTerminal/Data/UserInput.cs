@@ -128,7 +128,7 @@ namespace POSTerminal
         /// <param name="message"></param>
         public static void Display(string message)
         {
-            Console.Write("\n\n" + message);
+            Console.Write(message);
         }
 
         /// <summary>
