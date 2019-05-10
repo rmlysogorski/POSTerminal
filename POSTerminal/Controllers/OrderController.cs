@@ -35,7 +35,7 @@ namespace POSTerminal
         {
             IView menuView = new MenuView();
             menuView.Display();
-            int input = UserInput.GetUserInputAsInteger(""); //Needs Validation!!!!-----Done
+            int input = int.Parse(Console.ReadLine()); //Needs Validation!!!!
             switch (input)
             {
                 case 1:
@@ -56,7 +56,7 @@ namespace POSTerminal
             bool proceed = true;
             while (proceed)
             {
-                int input = UserInput.GetUserInputAsInteger(""); //Need Validation!!!-----------Done
+                int input = int.Parse(Console.ReadLine()); //Need Validation!!!
                 switch (input)
                 {
                     case 1:
@@ -81,8 +81,8 @@ namespace POSTerminal
         {
             IView productListView = new ProductListView(productList);
             productListView.Display();
-            int input = UserInput.GetUserInputAsInteger(""); //Needs Validation!-----------(Done)
-            int quantity = UserInput.GetUserInputAsInteger(""); //Needs Validation!-------(Done)
+            int input = int.Parse(Console.ReadLine()); //Needs Validation!
+            int quantity = int.Parse(Console.ReadLine()); //Needs Validation!
             for (int i = 0; i < quantity; i++)
             {
                 myOrder.PurchaseList.Add(productList[input]);
@@ -97,8 +97,8 @@ namespace POSTerminal
         {
             IView productListView = new ProductListView(myOrder.PurchaseList);
             productListView.Display();
-            int input = UserInput.GetUserInputAsInteger(""); //Needs Validation!-----(Done)
-            int quantity = UserInput.GetUserInputAsInteger(""); //Needs Validation!-----(Done)
+            int input = int.Parse(Console.ReadLine()); //Needs Validation!
+            int quantity = int.Parse(Console.ReadLine()); //Needs Validation!
             for (int i = 0; i < quantity; i++)
             {
                 myOrder.PurchaseList.Remove(productList[input]);
@@ -112,11 +112,7 @@ namespace POSTerminal
             myOrder.Total = myOrder.Subtotal + myOrder.Tax;
             IView paymentView = new PaymentView(myOrder);
             paymentView.Display();
-<<<<<<< HEAD
             int input = int.Parse(Console.ReadLine()); //Needs Validation!!!            
-=======
-            int input = UserInput.GetUserInputAsInteger(""); //Validation done
->>>>>>> 3406df236ebce8672e89eda3427eb76bb4886a50
             switch (input)
             {
                 case 1:
