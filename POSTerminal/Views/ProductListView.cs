@@ -23,7 +23,28 @@ namespace POSTerminal
 
         public void Display()
         {
-            throw new NotImplementedException();
+            int count = 1;
+            foreach(Product p in productList)
+            {
+                Console.WriteLine($"{count}: {p.Name}");
+                count++;
+            }
+        }
+
+        public List<Product> GetFilteredList(string code, string input)
+        {
+            if(code.ToLower() == "name")
+            {
+                return productList.FindAll(x => x.Name.Contains(input));
+                
+            }
+            else if (code.ToLower() == "category")
+            {
+
+                return productList.FindAll(x => x.Category.Contains(input));
+            }
+
+            return new List<Product>();
         }
     }
 }
