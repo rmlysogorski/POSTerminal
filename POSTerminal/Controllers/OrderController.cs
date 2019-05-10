@@ -257,35 +257,35 @@ namespace POSTerminal
             paymentView.Display();
 
             //ask how they want to pay
-            view.display("Input payment type: ");
+            view.Display("Input payment type: ");
             int input = UserInput.GetUserInputAsInteger("");
             switch (input)
             {
                 case 1: //Cash - Get amount tendered and calculate change
                     myOrder.PayInfo.PayType = "cash";
-                    view.display($"{myOrder.PayInfo.AmountTenderedMessage}");
+                    view.Display($"{myOrder.PayInfo.AmountTenderedMessage}");
                     myOrder.PayInfo.AmountTendered = UserInput.GetUserInputAsDouble("");
                     myOrder.PayInfo.Change = myOrder.PayInfo.AmountTendered - myOrder.Total;
-                    view.display($"{myOrder.PayInfo.ChangeMessage} {myOrder.PayInfo.Change:C2}");
+                    view.Display($"{myOrder.PayInfo.ChangeMessage} {myOrder.PayInfo.Change:C2}");
                     break;
                 case 2: //Credit - ask for number, expiration and cvv
                     myOrder.PayInfo.PayType = "credit";
-                    view.display(myOrder.PayInfo.CreditCardNumberMessage);
+                    view.Display(myOrder.PayInfo.CreditCardNumberMessage);
                     myOrder.PayInfo.CardNumber = UserInput.GetCreditCardNumber();
-                    view.display(myOrder.PayInfo.ExpirationDateMessage);
+                    view.Display(myOrder.PayInfo.ExpirationDateMessage);
                     myOrder.PayInfo.ExpirationDate = UserInput.GetCreditCardExpiration();
-                    view.display(myOrder.PayInfo.CvvMessage);
+                    view.Display(myOrder.PayInfo.CvvMessage);
                     myOrder.PayInfo.Cvv = UserInput.GetCreditCardCVV();
-                    view.display("Enter cash back (press enter or input 0 to skip): ");
+                    view.Display("Enter cash back (press enter or input 0 to skip): ");
                     myOrder.PayInfo.CashBack = UserInput.GetCashBack();
                     if (myOrder.PayInfo.CashBack != 0)
                     {
-                        view.display($"{myOrder.PayInfo.CashBackMessage} {myOrder.PayInfo.CashBack}");
+                        view.Display($"{myOrder.PayInfo.CashBackMessage} {myOrder.PayInfo.CashBack}");
                     }
                     break;
                 case 3://Check - ask for check number
                     myOrder.PayInfo.PayType = "check";
-                    view.display(myOrder.PayInfo.CheckNumberMessage);
+                    view.Display(myOrder.PayInfo.CheckNumberMessage);
                     myOrder.PayInfo.CheckNumber = UserInput.GetCheckNumber();
                     break;
                 default:
