@@ -32,7 +32,7 @@ namespace POSTerminal
 
                 for(int i = 0; i < myOrder.PurchaseList.Count; i++)
                 {
-                    items = string.Format("{0,6}{1,-31}{2,-5}{3,-10:C2}",
+                    items = string.Format("{0,-6}{1,-31}{2,-5}{3,-10:C2}",
                     i + 1,
                     myOrder.PurchaseList[i].Name,
                     myOrder.PurchaseList[i].Qty,

@@ -29,6 +29,26 @@ namespace POSTerminal
             }
         }
 
+        public static int GetUserInputAsIntegerOrReturnOne(string message)
+        {
+            Display(message);
+            string input = Console.ReadLine();
+
+            if (input == string.Empty)
+            {
+                return 1;
+            }
+            try
+            {
+                return int.Parse(input);
+            }
+            catch (Exception)
+            {
+                Display("A whole number is needed like 1, but not like 1.0!");
+                return GetUserInputAsInteger(message);
+            }
+        }
+
 
         public static int[] GetUserMultipleInputAsInteger(string message, char splitter=' ')
         {

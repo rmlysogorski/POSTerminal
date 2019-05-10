@@ -35,7 +35,7 @@ namespace POSTerminal
         {
             IView menuView = new MenuView();
             menuView.Display();
-            int input = UserInput.GetUserInputAsInteger(""); 
+            int input = UserInput.GetUserInputAsInteger("");
             switch (input)
             {
                 case 1:
@@ -52,11 +52,12 @@ namespace POSTerminal
         public void CheckoutAction()
         {
             IView cartView = new CartView(myOrder);
-            cartView.Display();
+
             bool proceed = true;
             while (proceed)
             {
-                int input = UserInput.GetUserInputAsInteger(""); 
+                cartView.Display();
+                int input = UserInput.GetUserInputAsInteger("");
                 switch (input)
                 {
                     case 1:
@@ -79,17 +80,93 @@ namespace POSTerminal
 
         public void AddProductToCart()
         {
-            IView productListView = new ProductListView(productList);
-            productListView.Display();
-            int input = int.Parse(Console.ReadLine()); 
-            int quantity = UserInput.GetUserInputAsInteger(""); 
-            for (int i = 0; i < quantity; i++)
-            {
-                myOrder.PurchaseList.Add(productList[input]);
-                myOrder.Subtotal += productList[input].Price;
-            }
+            ProductListView productListView = new ProductListView(productList);
+            IMessage view = new MessageView();
+            int quantity = 0;
+            view.display("1: Search By Name\n2: Search By Category\n3: List All Products");
+            int input = UserInput.GetUserInputAsInteger("");
 
-            myOrder.Tax = myOrder.Subtotal * Tax.tax;
+            switch (input)
+            {
+                case 1:
+
+                    view.display("Enter product name: ");
+                    string name = UserInput.GetUserInput("");
+                    ProductListView filteredList = new ProductListView(productListView.GetFilteredList("name", name));
+                    filteredList.Display();
+                    view.display(string.Format("\nChoose a product (1-{0})", filteredList.ProductList.Count));
+                    input = UserInput.GetUserInputAsInteger("");
+                    input--;
+                    view.display("Enter Quantity: ");
+                    quantity = UserInput.GetUserInputAsIntegerOrReturnOne("");
+
+
+                    if (myOrder.PurchaseList.Contains(filteredList.ProductList[input]))
+                    {
+                        myOrder.PurchaseList.Find(x => x.Name == filteredList.ProductList[input].Name).Qty += quantity;
+                    }
+                    else
+                    {
+
+                        myOrder.PurchaseList.Add(filteredList.ProductList[input]);
+                        myOrder.PurchaseList.Find(x => x.Name == filteredList.ProductList[input].Name).Qty += quantity;
+
+                    }
+
+                    break;
+                case 2:
+                    view.display("Enter product category: ");
+                    string category = UserInput.GetUserInput("");
+                    ProductListView filteredListByCat = new ProductListView(productListView.GetFilteredList("category", category));
+                    filteredListByCat.Display();
+                    view.display(string.Format("\nChoose a product (1-{0})", filteredListByCat.ProductList.Count));
+                    input = UserInput.GetUserInputAsInteger("");
+                    input--;
+                    view.display("Enter Quantity: ");
+                    quantity = UserInput.GetUserInputAsIntegerOrReturnOne("");
+
+
+                    if (myOrder.PurchaseList.Contains(filteredListByCat.ProductList[input]))
+                    {
+                        myOrder.PurchaseList.Find(x => x.Name == filteredListByCat.ProductList[input].Name).Qty += quantity;
+                    }
+                    else
+                    {
+
+                        myOrder.PurchaseList.Add(filteredListByCat.ProductList[input]);
+                        myOrder.PurchaseList.Find(x => x.Name == filteredListByCat.ProductList[input].Name).Qty += quantity;
+
+                    }
+
+                    break;
+                case 3:
+                    productListView.Display();
+                    view.display(string.Format("\nChoose a product (1-{0})", productList.Count));
+                    input = UserInput.GetUserInputAsInteger("");
+                    input--;
+                    view.display("Enter Quantity: ");
+                    quantity = UserInput.GetUserInputAsIntegerOrReturnOne("");
+
+
+                    if (myOrder.PurchaseList.Contains(productList[input]))
+                    {
+                        myOrder.PurchaseList.Find(x => x.Name == productList[input].Name).Qty += quantity;
+                    }
+                    else
+                    {
+
+                        myOrder.PurchaseList.Add(productList[input]);
+                        myOrder.PurchaseList.Find(x => x.Name == productList[input].Name).Qty += quantity;
+
+                    }
+
+                    break;
+
+                default:
+
+                    break;
+
+            }
 
         }
 
@@ -97,8 +174,8 @@ namespace POSTerminal
         {
             IView productListView = new ProductListView(myOrder.PurchaseList);
             productListView.Display();
-            int input = UserInput.GetUserInputAsInteger(""); 
-            int quantity = UserInput.GetUserInputAsInteger(""); 
+            int input = UserInput.GetUserInputAsInteger("");
+            int quantity = UserInput.GetUserInputAsInteger("");
             for (int i = 0; i < quantity; i++)
             {
                 myOrder.PurchaseList.Remove(productList[input]);
@@ -112,7 +189,7 @@ namespace POSTerminal
             myOrder.Total = myOrder.Subtotal + myOrder.Tax;
             IView paymentView = new PaymentView(myOrder);
             paymentView.Display();
-            int input = UserInput.GetUserInputAsInteger("");         
+            int input = UserInput.GetUserInputAsInteger("");
             switch (input)
             {
                 case 1:
