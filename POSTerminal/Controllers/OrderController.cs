@@ -35,7 +35,7 @@ namespace POSTerminal
         {
             IView menuView = new MenuView();
             menuView.Display();
-            int input = int.Parse(Console.ReadLine()); //Needs Validation!!!!
+            int input = UserInput.GetUserInputAsInteger(""); 
             switch (input)
             {
                 case 1:
@@ -56,7 +56,7 @@ namespace POSTerminal
             bool proceed = true;
             while (proceed)
             {
-                int input = int.Parse(Console.ReadLine()); //Need Validation!!!
+                int input = UserInput.GetUserInputAsInteger(""); 
                 switch (input)
                 {
                     case 1:
@@ -81,8 +81,8 @@ namespace POSTerminal
         {
             IView productListView = new ProductListView(productList);
             productListView.Display();
-            int input = int.Parse(Console.ReadLine()); //Needs Validation!
-            int quantity = int.Parse(Console.ReadLine()); //Needs Validation!
+            int input = int.Parse(Console.ReadLine()); 
+            int quantity = UserInput.GetUserInputAsInteger(""); 
             for (int i = 0; i < quantity; i++)
             {
                 myOrder.PurchaseList.Add(productList[input]);
@@ -97,8 +97,8 @@ namespace POSTerminal
         {
             IView productListView = new ProductListView(myOrder.PurchaseList);
             productListView.Display();
-            int input = int.Parse(Console.ReadLine()); //Needs Validation!
-            int quantity = int.Parse(Console.ReadLine()); //Needs Validation!
+            int input = UserInput.GetUserInputAsInteger(""); 
+            int quantity = UserInput.GetUserInputAsInteger(""); 
             for (int i = 0; i < quantity; i++)
             {
                 myOrder.PurchaseList.Remove(productList[input]);
@@ -112,7 +112,7 @@ namespace POSTerminal
             myOrder.Total = myOrder.Subtotal + myOrder.Tax;
             IView paymentView = new PaymentView(myOrder);
             paymentView.Display();
-            int input = int.Parse(Console.ReadLine()); //Needs Validation!!!            
+            int input = UserInput.GetUserInputAsInteger("");         
             switch (input)
             {
                 case 1:

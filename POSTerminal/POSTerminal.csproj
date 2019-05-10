@@ -44,6 +44,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Data\FileIO.cs" />
+    <Compile Include="Data\UserInput.cs" />
     <Compile Include="Model\PaymentInfo.cs" />
     <Compile Include="Views\AddProductView.cs" />
     <Compile Include="Views\CartView.cs" />
