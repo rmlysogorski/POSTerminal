@@ -21,7 +21,7 @@ namespace POSTerminal
         {
             Console.Clear();
             IView orderListView = new OrderListView(myOrder);
-            Console.WriteLine("\nCurrent Order: ");
+            Console.WriteLine("Current Order: ");
             orderListView.Display();
             Console.WriteLine("\n1: Add an Item");
             Console.WriteLine("2: Remove an Item");
