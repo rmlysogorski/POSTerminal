@@ -1,4 +1,4 @@
-﻿using POSTerminal.Data;
+﻿
 using System;
 using System.Collections.Generic;
 
@@ -8,7 +8,7 @@ namespace POSTerminal
     {
         static void Main(string[] args)
         {
-            List<Product> productList = FileIO.GetDataFile();
+            List<Product> productList = FileIO.GetFromProductFile();
             OrderController orderController = new OrderController(productList);
 
             orderController.WelcomeAction();

@@ -33,11 +33,13 @@ namespace POSTerminal
 
         public void WelcomeAction()
         {
+            
             IView menuView = new MenuView();
             bool repeat = true;
 
             while (repeat)
             {
+                productList = FileIO.GetFromProductFile();
                 myOrder = new Order();
                 menuView.Display();
                 int input = UserInput.GetUserInputAsInteger("");
@@ -51,6 +53,10 @@ namespace POSTerminal
                         break;
 
                     case 3:
+                        AddToProductFile();
+                        break;
+
+                    case 4:
                         new MessageView().Display("Are you sure (Y/N)? ");
 
                         if (UserInput.UserConfirmationPrompt(""))
@@ -331,6 +337,85 @@ namespace POSTerminal
 
             ReceiptView receiptView = new ReceiptView(myOrder);
             receiptView.Display();
+        }
+
+        public void AddToProductFile()
+        {
+            Product newProduct = new Product();
+            IView addProductView = new AddProductView(productList);
+            IMessage view = new MessageView();
+            addProductView.Display();            
+            view.Display("\nPlease enter EXIT at any time to quit.\n");
+            view.Display("Enter new product name: ");
+            string input = UserInput.GetUserInput("");
+            if(input.ToLower() == "exit")
+            {
+                return;
+            }
+            newProduct.Name = input;
+            view.Display("Enter new product category: ");
+            input = UserInput.GetUserInput("");
+            if(input.ToLower() == "exit")
+            {
+                return;
+            }
+            newProduct.Category = input;
+            bool checkPrice = false;
+            while (!checkPrice)
+            {
+                view.Display("Enter new product price: ");
+                input = UserInput.GetUserInput("");
+                if (input.ToLower() == "exit")
+                {
+                    return;
+                }
+                if (double.TryParse(input, out double newPrice))
+                {
+                    newProduct.Price = newPrice;
+                    checkPrice = true;
+                }
+            }
+            view.Display("Enter new product description: ");
+            input = UserInput.GetUserInput("");
+            if(input.ToLower() == "exit")
+            {
+                return;
+            }
+            newProduct.Description = input;
+                        
+            while(input.ToLower() != "y" && input.ToLower() != "n")
+            {
+                view.Display($"\nName: {newProduct.Name}\nCategory: {newProduct.Category}\nPrice: {newProduct.Price}\nDescription: {newProduct.Description}");
+                view.Display("\nEnter this product into the database? (y/n): ");
+                input = UserInput.GetUserInput("");
+            }
+
+            bool alreadyExists = false;
+            if(input.ToLower() == "y")
+            {
+                foreach(Product p in productList)
+                {
+                    if(p.Name.ToLower() == newProduct.Name.ToLower())
+                    {
+                        view.Display("A product with this name already exists!\n");
+                        view.Display("This new product will not be added to the database!");
+                        Console.ReadKey();
+                        alreadyExists = true;
+                    }
+                }
+
+                if(!alreadyExists)
+                {
+                    FileIO.WriteToProductFile(newProduct);
+                    Console.WriteLine("Wrote to File!");
+                    Console.ReadKey();
+                }
+            }
+            else
+            {
+                view.Display("The new product was not added to the database.");
+            }
+
         }
 
     }
