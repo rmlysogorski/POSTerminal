@@ -68,6 +68,9 @@ namespace POSTerminal
                         break;
                     case 3:
                         proceed = false;
+                        break;
+                    case 4:
+                        proceed = false;
                         ProcessPayment();
                         break;
                     default:
@@ -186,28 +189,59 @@ namespace POSTerminal
 
         public void ProcessPayment()
         {
+            IMessage view = new MessageView();
+            //Calculate Subtotal, tax and total
+            myOrder.Subtotal = 0;
+            foreach (Product p in myOrder.PurchaseList)
+            {
+                myOrder.Subtotal += p.Price * p.Qty;
+            }
+            myOrder.Tax = myOrder.Subtotal * Tax.tax;
             myOrder.Total = myOrder.Subtotal + myOrder.Tax;
+
+            //Display the information
             IView paymentView = new PaymentView(myOrder);
             paymentView.Display();
+
+            //ask how they want to pay
+            view.display("Input payment type: ");
             int input = UserInput.GetUserInputAsInteger("");
             switch (input)
             {
-                case 1:
+                case 1: //Cash - Get amount tendered and calculate change
                     myOrder.PayInfo.PayType = "cash";
-                    Console.WriteLine($"{myOrder.PayInfo.AmountTenderedMessage}");
-                    myOrder.PayInfo.AmountTendered = double.Parse(Console.ReadLine());
-                    Console.WriteLine($"{myOrder.PayInfo.ChangeMessage} {myOrder.PayInfo.Change}");
+                    view.display($"{myOrder.PayInfo.AmountTenderedMessage}");
+                    myOrder.PayInfo.AmountTendered = UserInput.GetUserInputAsDouble("");
+                    myOrder.PayInfo.Change = myOrder.PayInfo.AmountTendered - myOrder.Total;
+                    view.display($"{myOrder.PayInfo.ChangeMessage} {myOrder.PayInfo.Change:C2}");
                     break;
-                case 2:
+                case 2: //Credit - ask for number, expiration and cvv
                     myOrder.PayInfo.PayType = "credit";
+                    view.display(myOrder.PayInfo.CreditCardNumberMessage);
+                    myOrder.PayInfo.CardNumber = UserInput.GetCreditCardNumber();
+                    view.display(myOrder.PayInfo.ExpirationDateMessage);
+                    myOrder.PayInfo.ExpirationDate = UserInput.GetCreditCardExpiration();
+                    view.display(myOrder.PayInfo.CvvMessage);
+                    myOrder.PayInfo.Cvv = UserInput.GetCreditCardCVV();
+                    view.display("Enter cash back (press enter or input 0 to skip): ");
+                    myOrder.PayInfo.CashBack = UserInput.GetCashBack();
+                    if (myOrder.PayInfo.CashBack != 0)
+                    {
+                        view.display($"{myOrder.PayInfo.CashBackMessage} {myOrder.PayInfo.CashBack}");
+                    }
                     break;
-                case 3:
+                case 3://Check - ask for check number
                     myOrder.PayInfo.PayType = "check";
+                    view.display(myOrder.PayInfo.CheckNumberMessage);
+                    myOrder.PayInfo.CheckNumber = UserInput.GetCheckNumber();
                     break;
                 default:
                     Console.WriteLine("Invalid Selection");
                     break;
             }
+
+            //ReceiptView receiptView = new ReceiptView(myOrder);
+            //view.display();
         }
 
     }

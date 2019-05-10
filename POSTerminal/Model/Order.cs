@@ -53,8 +53,10 @@ namespace POSTerminal
             get { return orderNumber; }
         }
 
-        public Order() {
+        public Order()
+        {
             purchaseList = new List<Product>();
+            payInfo = new PaymentInfo("");
         }
 
         public Order(List<Product> _purchaseList, double _subtotal, PaymentInfo _payType, double _tax, double _total, DateTime _date, int _orderNumber)
