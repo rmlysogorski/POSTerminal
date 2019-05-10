@@ -102,12 +102,15 @@ namespace POSTerminal
             ProductListView productListView = new ProductListView(productList);
             IMessage view = new MessageView();
             int quantity = 0;
+
             view.Display("1: Search By Name\n2: Search By Category\n3: List All Products\n4: Go Back\n\nMake a selection: ");
+
             int input = UserInput.GetUserInputAsInteger("");
             bool goBack = false;
 
             while (!goBack)
             {
+
 
                 switch (input)
                 {
@@ -133,6 +136,7 @@ namespace POSTerminal
                             filteredList.ProductList[input].Qty += quantity;
                             myOrder.PurchaseList.Add(filteredList.ProductList[input]);
                         }
+
 
                         break;
                     case 2:
@@ -187,6 +191,7 @@ namespace POSTerminal
                         goBack = true;
                         break;
 
+
                     default:
 
                         break;
@@ -203,6 +208,7 @@ namespace POSTerminal
                 IView productListView = new ProductListView(myOrder.PurchaseList);
                 productListView.Display();
 
+
                 new MessageView().Display($"Enter item#(1-{myOrder.PurchaseList.Count}): ");
                 int input = UserInput.GetUserInputAsInteger("");
                 
@@ -215,6 +221,7 @@ namespace POSTerminal
                 int quantity = UserInput.GetUserInputAsIntegerOrReturnOne("");
                 string nameOfItem = myOrder.PurchaseList[input].Name;
                 Product deletedProduct = myOrder.PurchaseList.Find(x => x.Name == nameOfItem);
+
 
                 if (deletedProduct.Qty == quantity)
                 {
@@ -262,10 +269,17 @@ namespace POSTerminal
             switch (input)
             {
                 case 1: //Cash - Get amount tendered and calculate change
-                    myOrder.PayInfo.PayType = "cash";
-                    view.Display($"{myOrder.PayInfo.AmountTenderedMessage}");
-                    myOrder.PayInfo.AmountTendered = UserInput.GetUserInputAsDouble("");
-                    myOrder.PayInfo.Change = myOrder.PayInfo.AmountTendered - myOrder.Total;
+
+                    myOrder.PayInfo.PayType = "cash";                    
+                    
+                    do
+                    {
+                        view.Display($"{myOrder.PayInfo.AmountTenderedMessage}");
+                        myOrder.PayInfo.AmountTendered += UserInput.GetUserInputAsDouble("");
+                        myOrder.PayInfo.Change = myOrder.PayInfo.AmountTendered - myOrder.Total;
+
+                    } while (myOrder.PayInfo.AmountTendered < myOrder.Total);
+              
                     view.Display($"{myOrder.PayInfo.ChangeMessage} {myOrder.PayInfo.Change:C2}");
                     break;
                 case 2: //Credit - ask for number, expiration and cvv
@@ -293,8 +307,8 @@ namespace POSTerminal
                     break;
             }
 
-            //ReceiptView receiptView = new ReceiptView(myOrder);
-            //view.display();
+            ReceiptView receiptView = new ReceiptView(myOrder);
+            receiptView.Display();
         }
 
     }
