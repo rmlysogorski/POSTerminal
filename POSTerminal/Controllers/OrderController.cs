@@ -86,21 +86,21 @@ namespace POSTerminal
             ProductListView productListView = new ProductListView(productList);
             IMessage view = new MessageView();
             int quantity = 0;
-            view.display("1: Search By Name\n2: Search By Category\n3: List All Products");
+            view.Display("1: Search By Name\n2: Search By Category\n3: List All Products");
             int input = UserInput.GetUserInputAsInteger("");
 
             switch (input)
             {
                 case 1:
 
-                    view.display("Enter product name: ");
+                    view.Display("Enter product name: ");
                     string name = UserInput.GetUserInput("");
                     ProductListView filteredList = new ProductListView(productListView.GetFilteredList("name", name));
                     filteredList.Display();
-                    view.display(string.Format("\nChoose a product (1-{0})", filteredList.ProductList.Count));
+                    view.Display(string.Format("\nChoose a product (1-{0})", filteredList.ProductList.Count));
                     input = UserInput.GetUserInputAsInteger("");
                     input--;
-                    view.display("Enter Quantity: ");
+                    view.Display("Enter Quantity: ");
                     quantity = UserInput.GetUserInputAsIntegerOrReturnOne("");
 
 
@@ -118,14 +118,14 @@ namespace POSTerminal
 
                     break;
                 case 2:
-                    view.display("Enter product category: ");
+                    view.Display("Enter product category: ");
                     string category = UserInput.GetUserInput("");
                     ProductListView filteredListByCat = new ProductListView(productListView.GetFilteredList("category", category));
                     filteredListByCat.Display();
-                    view.display(string.Format("\nChoose a product (1-{0})", filteredListByCat.ProductList.Count));
+                    view.Display(string.Format("\nChoose a product (1-{0})", filteredListByCat.ProductList.Count));
                     input = UserInput.GetUserInputAsInteger("");
                     input--;
-                    view.display("Enter Quantity: ");
+                    view.Display("Enter Quantity: ");
                     quantity = UserInput.GetUserInputAsIntegerOrReturnOne("");
 
 
@@ -144,10 +144,10 @@ namespace POSTerminal
                     break;
                 case 3:
                     productListView.Display();
-                    view.display(string.Format("\nChoose a product (1-{0})", productList.Count));
+                    view.Display(string.Format("\nChoose a product (1-{0})", productList.Count));
                     input = UserInput.GetUserInputAsInteger("");
                     input--;
-                    view.display("Enter Quantity: ");
+                    view.Display("Enter Quantity: ");
                     quantity = UserInput.GetUserInputAsIntegerOrReturnOne("");
 
 
@@ -204,35 +204,41 @@ namespace POSTerminal
             paymentView.Display();
 
             //ask how they want to pay
-            view.display("Input payment type: ");
+            view.Display("Input payment type: ");
             int input = UserInput.GetUserInputAsInteger("");
             switch (input)
             {
                 case 1: //Cash - Get amount tendered and calculate change
-                    myOrder.PayInfo.PayType = "cash";
-                    view.display($"{myOrder.PayInfo.AmountTenderedMessage}");
-                    myOrder.PayInfo.AmountTendered = UserInput.GetUserInputAsDouble("");
-                    myOrder.PayInfo.Change = myOrder.PayInfo.AmountTendered - myOrder.Total;
-                    view.display($"{myOrder.PayInfo.ChangeMessage} {myOrder.PayInfo.Change:C2}");
+                    myOrder.PayInfo.PayType = "cash";                    
+                    
+                    do
+                    {
+                        view.Display($"{myOrder.PayInfo.AmountTenderedMessage}");
+                        myOrder.PayInfo.AmountTendered += UserInput.GetUserInputAsDouble("");
+                        myOrder.PayInfo.Change = myOrder.PayInfo.AmountTendered - myOrder.Total;
+
+                    } while (myOrder.PayInfo.AmountTendered < myOrder.Total);
+
+                    view.Display($"{myOrder.PayInfo.ChangeMessage} {myOrder.PayInfo.Change:C2}");
                     break;
                 case 2: //Credit - ask for number, expiration and cvv
                     myOrder.PayInfo.PayType = "credit";
-                    view.display(myOrder.PayInfo.CreditCardNumberMessage);
+                    view.Display(myOrder.PayInfo.CreditCardNumberMessage);
                     myOrder.PayInfo.CardNumber = UserInput.GetCreditCardNumber();
-                    view.display(myOrder.PayInfo.ExpirationDateMessage);
+                    view.Display(myOrder.PayInfo.ExpirationDateMessage);
                     myOrder.PayInfo.ExpirationDate = UserInput.GetCreditCardExpiration();
-                    view.display(myOrder.PayInfo.CvvMessage);
+                    view.Display(myOrder.PayInfo.CvvMessage);
                     myOrder.PayInfo.Cvv = UserInput.GetCreditCardCVV();
-                    view.display("Enter cash back (press enter or input 0 to skip): ");
+                    view.Display("Enter cash back (press enter or input 0 to skip): ");
                     myOrder.PayInfo.CashBack = UserInput.GetCashBack();
                     if (myOrder.PayInfo.CashBack != 0)
                     {
-                        view.display($"{myOrder.PayInfo.CashBackMessage} {myOrder.PayInfo.CashBack}");
+                        view.Display($"{myOrder.PayInfo.CashBackMessage} {myOrder.PayInfo.CashBack}");
                     }
                     break;
                 case 3://Check - ask for check number
                     myOrder.PayInfo.PayType = "check";
-                    view.display(myOrder.PayInfo.CheckNumberMessage);
+                    view.Display(myOrder.PayInfo.CheckNumberMessage);
                     myOrder.PayInfo.CheckNumber = UserInput.GetCheckNumber();
                     break;
                 default:
@@ -240,8 +246,8 @@ namespace POSTerminal
                     break;
             }
 
-            //ReceiptView receiptView = new ReceiptView(myOrder);
-            //view.display();
+            ReceiptView receiptView = new ReceiptView(myOrder);
+            receiptView.Display();
         }
 
     }
