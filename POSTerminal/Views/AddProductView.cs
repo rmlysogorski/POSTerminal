@@ -23,7 +23,8 @@ namespace POSTerminal
 
         public void Display()
         {
-            throw new NotImplementedException();
+            IView productListView = new ProductListView(productList);
+            productListView.Display();
         }
     }
 }

@@ -37,6 +37,12 @@
             set { qty = value; }
             get { return qty; }
         }
+
+        public Product()
+        {
+            qty = 0;
+        }
+
         public Product(string _name, string _category, double _price, string _description, int _qty = 0)
         {
             name = _name;

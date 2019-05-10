@@ -1,17 +1,19 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.IO;
+using System.Security.Permissions;
 
-namespace POSTerminal.Data
+namespace POSTerminal
 {
     class FileIO
     {
 
-        public static List<Product> GetDataFile()
+        public static List<Product> GetFromProductFile()
         {
             List<Product> productList = new List<Product>();
 
-            string fileName = @"\\Data\\productList.txt";
-            string binaryPath = Path.GetDirectoryName(System.Reflection.Assembly.GetEntryAssembly().Location) + fileName;
+            string fileName = @"..\\..\\Data\\productList.txt";
+            string binaryPath = AppDomain.CurrentDomain.BaseDirectory + fileName;                       
 
             StreamReader myFile = new StreamReader(binaryPath);
 
@@ -40,15 +42,15 @@ namespace POSTerminal.Data
         public static void WriteToProductFile(Product product)
         {
 
-            string fileName = @"\\Data\\productList.txt";
-            string binaryPath = Path.GetDirectoryName(System.Reflection.Assembly.GetEntryAssembly().Location) + fileName;
+            string fileName = @"..\\..\\Data\\productList.txt";
+            string binaryPath = AppDomain.CurrentDomain.BaseDirectory + fileName;
             string delimiter = "|";
 
-            StreamWriter myFileWriter = new StreamWriter(binaryPath);
+            StreamWriter myFileWriter = new StreamWriter(binaryPath, true);
 
             try
             {
-                myFileWriter.WriteLine(product.Name + delimiter + product.Category + delimiter + product.Price + delimiter + product.Description);
+                myFileWriter.Write("\n" + product.Name + delimiter + product.Category + delimiter + product.Price + delimiter + product.Description);
             }
             catch (System.Exception)
             {
@@ -58,6 +60,7 @@ namespace POSTerminal.Data
             {
                 myFileWriter.Close();
             }
+
 
         }
     }

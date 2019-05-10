@@ -10,3 +10,5 @@ tea|beverage|1.49|Perfect for tea time!
 decaf tea|beverage|1.49|Relax at tea time without the caffeine.
 bottled water|beverage|1.25|Gotta stay hydrated!
 bagel|food|1.99|Goes great with cream cheese!
+hot cocoa|beverage|1.49|A cup of hot chocolate.
+baklava|food|2.99|A middle eastern treat.
