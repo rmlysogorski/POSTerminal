@@ -7,7 +7,7 @@ namespace POSTerminal
     {
         private List<Product> purchaseList;
         private double subtotal;
-        private string payType;
+        private PaymentInfo payInfo;
         private double tax;
         private double total;
         private DateTime date;
@@ -24,10 +24,10 @@ namespace POSTerminal
             get { return subtotal; }
         }
 
-        public string PayType
+        public PaymentInfo PayInfo
         {
-            set { payType = value; }
-            get { return payType; }
+            set { payInfo = value; }
+            get { return payInfo; }
         }
 
         public double Tax
@@ -55,11 +55,11 @@ namespace POSTerminal
 
         public Order() { }
 
-        public Order(List<Product> _purchaseList, double _subtotal, string _payType, double _tax, double _total, DateTime _date, int _orderNumber)
+        public Order(List<Product> _purchaseList, double _subtotal, PaymentInfo _payType, double _tax, double _total, DateTime _date, int _orderNumber)
         {
             purchaseList = _purchaseList;
             subtotal = _subtotal;
-            payType = _payType;
+            payInfo = _payType;
             tax = _tax;
             total = _total;
             date = _date;

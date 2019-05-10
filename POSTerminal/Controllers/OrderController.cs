@@ -7,6 +7,7 @@ namespace POSTerminal
     {
         private Order myOrder = new Order();
         private List<Product> productList;
+        private PaymentInfo payType;
 
         public Order MyOrder
         {
@@ -17,6 +18,12 @@ namespace POSTerminal
         {
             get { return productList; }
             set { productList = value; }
+        }
+
+        public PaymentInfo PayType
+        {
+            get { return payType; }
+            set { payType = value; }
         }
 
         public OrderController(List<Product> _productList)
@@ -79,7 +86,10 @@ namespace POSTerminal
             for (int i = 0; i < quantity; i++)
             {
                 myOrder.PurchaseList.Add(productList[input]);
+                myOrder.Subtotal += productList[input].Price;
             }
+
+            myOrder.Tax = myOrder.Subtotal * Tax.tax;
 
         }
 
@@ -92,27 +102,29 @@ namespace POSTerminal
             for (int i = 0; i < quantity; i++)
             {
                 myOrder.PurchaseList.Remove(productList[input]);
+                myOrder.Subtotal -= productList[input].Price;
             }
+            myOrder.Tax = myOrder.Subtotal * Tax.tax;
         }
 
         public void ProcessPayment()
         {
+            myOrder.Total = myOrder.Subtotal + myOrder.Tax;
             IView paymentView = new PaymentView(myOrder);
             paymentView.Display();
-            int input = int.Parse(Console.ReadLine()); //Needs Validation!!!
+            int input = int.Parse(Console.ReadLine()); //Needs Validation!!!            
             switch (input)
             {
                 case 1:
-                    IView cashView = new CashView(myOrder);
-                    cashView.Display();
+                    myOrder.PayInfo.PayType = "cash";
+                    Console.WriteLine($"{myOrder.PayInfo.AmountTenderedMessage}");
+                    myOrder.PayInfo.AmountTendered = double.Parse(Console.ReadLine());
                     break;
                 case 2:
-                    IView creditView = new CreditCardView(myOrder);
-                    creditView.Display();
+                    myOrder.PayInfo.PayType = "credit";
                     break;
                 case 3:
-                    IView checkView = new CheckView(myOrder);
-                    checkView.Display();
+                    myOrder.PayInfo.PayType = "check";
                     break;
                 default:
                     Console.WriteLine("Invalid Selection");

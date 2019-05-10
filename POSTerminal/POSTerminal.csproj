@@ -44,18 +44,13 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Data\FileIO.cs" />
-    <Compile Include="Model\Cash.cs" />
-    <Compile Include="Model\Check.cs" />
-    <Compile Include="Model\Credit.cs" />
-    <Compile Include="Model\Payment.cs" />
+    <Compile Include="Model\PaymentInfo.cs" />
     <Compile Include="Views\AddProductView.cs" />
     <Compile Include="Views\CartView.cs" />
-    <Compile Include="Views\IMessageView.cs" />
     <Compile Include="Views\IView.cs" />
     <Compile Include="Views\MenuView.cs" />
     <Compile Include="Model\Order.cs" />
     <Compile Include="Controllers\OrderController.cs" />
-    <Compile Include="Views\MessageView.cs" />
     <Compile Include="Views\OrderListView.cs" />
     <Compile Include="Views\PaymentView.cs" />
     <Compile Include="Model\Product.cs" />

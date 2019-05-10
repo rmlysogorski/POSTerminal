@@ -1,4 +1,5 @@
 ﻿using POSTerminal.Data;
+using System;
 using System.Collections.Generic;
 
 namespace POSTerminal
@@ -9,7 +10,7 @@ namespace POSTerminal
         {
             List<Product> productList = FileIO.GetDataFile();
 
-            foreach(Product p in productList)
+            foreach (Product p in productList)
             {
                 System.Console.WriteLine(p.Name);
             }
