@@ -2,29 +2,35 @@
 
 namespace POSTerminal
 {
+    enum PayType
+    {
+        Cash = 1,
+        Credit,
+        Check
+    }
+
     class PaymentInfo
     {
-        private string payType;
-
+        private PayType payType;
         private double amountTendered;
         private double change;
-        private string amountTenderedMessage = "Enter the amount tendered: ";
-        private string changeMessage = "Their change is: ";
-
         private string cardNumber;
         private int cvv;
         private DateTime expirationDate;
         private double cashBack;
+        private string checkNumber;
+
+        private string checkNumberMessage = "Enter the check number: ";
         private string creditCardNumberMessage = "Enter the credit card number: ";
         private string cvvMessage = "Enter the CVV: ";
         private string expirationDateMessage = "Enter the expiration date: ";
         private string cashBackMessage = "Their cash back totals: ";
+        private string amountTenderedMessage = "Enter the amount tendered: ";
+        private string changeMessage = "Their change is: ";
 
-        private string checkNumber;
-        private string checkNumberMessage = "Enter the check number: ";
 
         #region payType
-        public string PayType
+        public PayType PayType
         {
             get { return payType; }
             set { payType = value; }
@@ -115,12 +121,18 @@ namespace POSTerminal
         }
         #endregion
 
-        public PaymentInfo() { }
-
-        public PaymentInfo(string _payType)
+        public PaymentInfo()
         {
-            payType = _payType;
+            payType = PayType.Cash;
+            amountTendered = 0.00;
+            change = 0.00;
+            cardNumber = "";
+            cvv = 0;
+            cashBack = 0;
+            checkNumber = "";
+            expirationDate = DateTime.Parse("01/01/1000"); ;
         }
+
 
     }
 }

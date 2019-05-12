@@ -25,7 +25,7 @@ namespace POSTerminal
         {
             Console.Clear();
             int headerSpacing = 20;
-            if (myOrder.PayInfo.PayType == "cash")
+            if (myOrder.PayInfo.PayType == PayType.Cash)
             {
                 Console.Write($"RSJ Coffee House\t\tOrder Number: {myOrder.OrderNumber}");
                 Console.WriteLine($"\nDate: {DateTime.Now.ToString("MM/dd/yyyy HH:mm:ss")}");
@@ -40,7 +40,7 @@ namespace POSTerminal
                 Console.WriteLine($"Change{PrintDots("Change", headerSpacing)}{myOrder.PayInfo.Change:C2}");
                 Console.WriteLine($"\nThank you for shopping at RSJ Coffee House");
             }
-            else if (myOrder.PayInfo.PayType == "credit")
+            else if (myOrder.PayInfo.PayType == PayType.Credit)
             {
                 Console.Write($"RSJ Coffee House\t\tOrder Number: {myOrder.OrderNumber}");
                 Console.WriteLine($"\nDate: {DateTime.Now.ToString("MM/dd/yyyy HH:mm:ss")}");

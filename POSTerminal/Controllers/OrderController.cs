@@ -41,6 +41,8 @@ namespace POSTerminal
             {
                 productList = FileIO.GetFromProductFile();
                 myOrder = new Order();
+                myOrder.OrderNumber = FileIO.GetLastOrderNumber() + 1;
+
                 menuView.Display();
                 int input = UserInput.GetUserInputAsInteger("");
 
@@ -49,7 +51,7 @@ namespace POSTerminal
                     case 1:
                         CheckoutAction();
                         break;
-                    case 2: //SalesHistoryAction();
+                    case 2: SalesHistoryAction();
                         break;
 
                     case 3:
@@ -70,6 +72,18 @@ namespace POSTerminal
                         break;
                 }
             }
+        }
+
+        private void SalesHistoryAction()
+        {
+            List<Order> todayOrder = FileIO.GetFromOrderFileByDate(DateTime.Today.Date);
+
+            foreach (Order order in todayOrder)
+            {
+                new OrderListView(order).ShowOrderDetail();
+            }
+
+            Console.ReadLine();
         }
 
         public void CheckoutAction()
@@ -123,9 +137,18 @@ namespace POSTerminal
                 {
                     case 1:
                         goBack = true;
-                        view.Display("Enter product name: ");
-                        string name = UserInput.GetUserInput("");
-                        ProductListView filteredList = new ProductListView(productListView.GetFilteredList("name", name));
+
+                        ProductListView filteredList;
+
+                        do
+                        {
+
+
+                            view.Display("Enter product name: ");
+                            string name = UserInput.GetUserInput("");
+                            filteredList = new ProductListView(productListView.GetFilteredList("name", name));
+                        }
+                        while (filteredList.ProductList.Count < 1);
 
                         filteredList.Display();
                         view.Display(string.Format("\nChoose a product (1-{0}): ", filteredList.ProductList.Count));
@@ -277,7 +300,7 @@ namespace POSTerminal
             {
                 case 1: //Cash - Get amount tendered and calculate change
 
-                    myOrder.PayInfo.PayType = "cash";
+                    myOrder.PayInfo.PayType = POSTerminal.PayType.Cash;
 
                     do
                     {
@@ -293,7 +316,7 @@ namespace POSTerminal
                     string cancel = string.Empty;
                     do
                     {
-                        myOrder.PayInfo.PayType = "credit";
+                        myOrder.PayInfo.PayType = POSTerminal.PayType.Credit;
                         view.Display(myOrder.PayInfo.CreditCardNumberMessage);
                         myOrder.PayInfo.CardNumber = UserInput.GetCreditCardNumber().Replace(" ", "");
                         view.Display(myOrder.PayInfo.ExpirationDateMessage);
@@ -325,7 +348,7 @@ namespace POSTerminal
                     }
                     break;
                 case 3://Check - ask for check number
-                    myOrder.PayInfo.PayType = "check";
+                    myOrder.PayInfo.PayType = POSTerminal.PayType.Check;
                     view.Display(myOrder.PayInfo.CheckNumberMessage);
                     myOrder.PayInfo.CheckNumber = UserInput.GetCheckNumber().Replace(" ", "");
                     myOrder.PayInfo.AmountTendered = myOrder.Total;
@@ -336,6 +359,7 @@ namespace POSTerminal
             }
 
             ReceiptView receiptView = new ReceiptView(myOrder);
+            FileIO.WriteToOrderFile(myOrder);
             receiptView.Display();
         }
 
@@ -348,6 +372,7 @@ namespace POSTerminal
             view.Display("\nPlease enter EXIT at any time to quit.\n");
             view.Display("Enter new product name: ");
             string input = UserInput.GetUserInput("");
+
             if(input.ToLower() == "exit")
             {
                 return;

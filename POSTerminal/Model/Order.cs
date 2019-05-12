@@ -2,16 +2,17 @@
 using System.Collections.Generic;
 
 namespace POSTerminal
-{
+{    
+
     class Order
     {
-        private List<Product> purchaseList;
+        private int orderNumber;
         private double subtotal;
-        private PaymentInfo payInfo;
         private double tax;
         private double total;
         private DateTime date;
-        private int orderNumber;
+        private List<Product> purchaseList;
+        private PaymentInfo payInfo;
 
         public List<Product> PurchaseList
         {
@@ -56,7 +57,7 @@ namespace POSTerminal
         public Order()
         {
             purchaseList = new List<Product>();
-            payInfo = new PaymentInfo("");
+            payInfo = new PaymentInfo();
         }
 
         public Order(List<Product> _purchaseList, double _subtotal, PaymentInfo _payType, double _tax, double _total, DateTime _date, int _orderNumber)

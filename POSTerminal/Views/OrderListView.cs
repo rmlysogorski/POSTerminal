@@ -21,6 +21,16 @@ namespace POSTerminal
             myOrder = _myOrder;
         }
 
+        public void ShowOrderDetail()
+        {
+
+            Console.WriteLine($"\n\nOrder#: {myOrder.OrderNumber} | Date: {myOrder.Date} | Total: {myOrder.Total} | PayType: {myOrder.PayInfo.PayType}");
+            foreach(Product p in myOrder.PurchaseList)
+            {
+                Console.Write($"{p.Name}({p.Qty}) @{p.Price:C2} ");
+            }
+        }
+
         public void Display()
         {
             string headers = string.Format("{0,-6}{1,-31}{2,-5}{3,-10}","Item#", "Name", "Qty", "Price");
