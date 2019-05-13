@@ -33,7 +33,7 @@ namespace POSTerminal
 
         public void WelcomeAction()
         {
-            
+
             IView menuView = new MenuView();
             bool repeat = true;
 
@@ -51,7 +51,8 @@ namespace POSTerminal
                     case 1:
                         CheckoutAction();
                         break;
-                    case 2: SalesHistoryAction();
+                    case 2:
+                        SalesHistoryAction();
                         break;
 
                     case 3:
@@ -87,7 +88,7 @@ namespace POSTerminal
                 }
 
             }
-            catch(Exception e)
+            catch (Exception e)
             {
                 new MessageView().Display(e.Message);
             }
@@ -135,12 +136,12 @@ namespace POSTerminal
 
             view.Display("1: Search By Name\n2: Search By Category\n3: List All Products\n4: Go Back\n\nMake a selection: ");
 
-            int input = UserInput.GetUserInputAsInteger("");
+            
             bool goBack = false;
 
             while (!goBack)
             {
-
+                int input = UserInput.GetUserInputAsInteger("");
 
                 switch (input)
                 {
@@ -160,8 +161,13 @@ namespace POSTerminal
                         while (filteredList.ProductList.Count < 1);
 
                         filteredList.Display();
-                        view.Display(string.Format("\nChoose a product (1-{0}): ", filteredList.ProductList.Count));
-                        input = UserInput.GetUserInputAsInteger("");
+                        do
+                        {
+
+                            view.Display(string.Format("\nChoose a product (1-{0}): ", filteredList.ProductList.Count));
+                            input = UserInput.GetUserInputAsIntegerOrReturnOne("");
+
+                        } while (!IsItemInProductList(input, 0, filteredList.ProductList.Count));
                         input--;
                         view.Display("Enter Quantity: ");
                         quantity = UserInput.GetUserInputAsIntegerOrReturnOne("");
@@ -180,12 +186,35 @@ namespace POSTerminal
                         break;
                     case 2:
                         goBack = true;
-                        view.Display("Enter product category: ");
-                        string category = UserInput.GetUserInput("");
+                        string category;
+                        bool proceed = false;
+                        do
+                        {
+                            view.Display("Enter product category (food/beverage): ");
+                            category = UserInput.GetUserInput("").ToLower();
+                            switch (category)
+                            {
+                                case "food":
+                                    proceed = true;
+                                    break;
+                                case "beverage":
+                                    proceed = true;
+                                    break;
+                                default:
+                                    proceed = false;
+                                    break;
+                            }
+                        } while (!proceed);
+                        
                         ProductListView filteredListByCat = new ProductListView(productListView.GetFilteredList("category", category));
                         filteredListByCat.Display();
-                        view.Display(string.Format("\nChoose a product (1-{0})", filteredListByCat.ProductList.Count));
-                        input = UserInput.GetUserInputAsInteger("");
+
+                        do
+                        {
+                            view.Display(string.Format("\nChoose a product (1-{0})", filteredListByCat.ProductList.Count));
+                            input = UserInput.GetUserInputAsInteger("");
+                        } while (!IsItemInProductList(input, 0, filteredListByCat.ProductList.Count));
+
                         input--;
                         view.Display("Enter Quantity: ");
                         quantity = UserInput.GetUserInputAsIntegerOrReturnOne("");
@@ -207,9 +236,16 @@ namespace POSTerminal
                     case 3:
                         goBack = true;
                         productListView.Display();
-                        view.Display(string.Format("\nChoose a product (1-{0})", productList.Count));
-                        input = UserInput.GetUserInputAsInteger("");
+
+                        do
+                        {
+                            view.Display(string.Format("\nChoose a product (1-{0})", productList.Count));
+                            input = UserInput.GetUserInputAsInteger("");
+                        }
+                        while (!IsItemInProductList(input, 0, productList.Count));
+                        
                         input--;
+
                         view.Display("Enter Quantity: ");
                         quantity = UserInput.GetUserInputAsIntegerOrReturnOne("");
 
@@ -240,6 +276,19 @@ namespace POSTerminal
 
         }
 
+        private bool IsItemInProductList(int num,int min, int max)
+        {
+            
+            if(num <= min || num > max)
+            {
+                return false;
+            }
+            else
+            {
+                return true;
+            }
+        }
+
         public void RemoveProductFromCart()
         {
             if (myOrder.PurchaseList.Count > 0)
@@ -262,9 +311,9 @@ namespace POSTerminal
                 Product deletedProduct = myOrder.PurchaseList.Find(x => x.Name == nameOfItem);
 
 
-                if (deletedProduct.Qty == quantity)
+                if (quantity >= deletedProduct.Qty)
                 {
-                    for (int i = 0; i < quantity; i++)
+                    for (int i = 0; i < deletedProduct.Qty; i++)
                     {
                         myOrder.Subtotal -= deletedProduct.Price;
                     }
@@ -303,8 +352,13 @@ namespace POSTerminal
             paymentView.Display();
 
             //ask how they want to pay
-            view.Display("Input payment type: ");
-            int input = UserInput.GetUserInputAsInteger("");
+            int input;
+            do
+            {
+                view.Display("Input payment type: ");
+                input = UserInput.GetUserInputAsInteger("");
+            } while (!IsItemInProductList(input, 0, 3));
+            
             switch (input)
             {
                 case 1: //Cash - Get amount tendered and calculate change
@@ -337,7 +391,7 @@ namespace POSTerminal
                                 view.Display("This credit card has expired.");
                                 view.Display("Enter r to re-enter the credit card information, enter c to cancel the order: ");
                                 cancel = UserInput.GetUserInput("");
-                                if(cancel.ToLower() != "r")
+                                if (cancel.ToLower() != "r")
                                 {
                                     return;
                                 }
@@ -345,7 +399,7 @@ namespace POSTerminal
                             }
                         }
                     } while (cancel.ToLower() == "r");
-                    
+
                     view.Display(myOrder.PayInfo.CvvMessage);
                     myOrder.PayInfo.Cvv = UserInput.GetCreditCardCVV();
                     view.Display("Enter cash back (press enter or input 0 to skip): ");
@@ -377,19 +431,19 @@ namespace POSTerminal
             Product newProduct = new Product();
             IView addProductView = new AddProductView(productList);
             IMessage view = new MessageView();
-            addProductView.Display();            
+            addProductView.Display();
             view.Display("\nPlease enter EXIT at any time to quit.\n");
             view.Display("Enter new product name: ");
             string input = UserInput.GetUserInput("");
 
-            if(input.ToLower() == "exit")
+            if (input.ToLower() == "exit")
             {
                 return;
             }
             newProduct.Name = input;
             view.Display("Enter new product category: ");
             input = UserInput.GetUserInput("");
-            if(input.ToLower() == "exit")
+            if (input.ToLower() == "exit")
             {
                 return;
             }
@@ -411,13 +465,13 @@ namespace POSTerminal
             }
             view.Display("Enter new product description: ");
             input = UserInput.GetUserInput("");
-            if(input.ToLower() == "exit")
+            if (input.ToLower() == "exit")
             {
                 return;
             }
             newProduct.Description = input;
-                        
-            while(input.ToLower() != "y" && input.ToLower() != "n")
+
+            while (input.ToLower() != "y" && input.ToLower() != "n")
             {
                 view.Display($"\nName: {newProduct.Name}\nCategory: {newProduct.Category}\nPrice: {newProduct.Price}\nDescription: {newProduct.Description}");
                 view.Display("\nEnter this product into the database? (y/n): ");
@@ -425,11 +479,11 @@ namespace POSTerminal
             }
 
             bool alreadyExists = false;
-            if(input.ToLower() == "y")
+            if (input.ToLower() == "y")
             {
-                foreach(Product p in productList)
+                foreach (Product p in productList)
                 {
-                    if(p.Name.ToLower() == newProduct.Name.ToLower())
+                    if (p.Name.ToLower() == newProduct.Name.ToLower())
                     {
                         view.Display("A product with this name already exists!\n");
                         view.Display("This new product will not be added to the database!");
@@ -438,7 +492,7 @@ namespace POSTerminal
                     }
                 }
 
-                if(!alreadyExists)
+                if (!alreadyExists)
                 {
                     FileIO.WriteToProductFile(newProduct);
                     Console.WriteLine("Wrote to File!");
