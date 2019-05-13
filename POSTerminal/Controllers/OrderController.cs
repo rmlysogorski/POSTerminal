@@ -76,11 +76,20 @@ namespace POSTerminal
 
         private void SalesHistoryAction()
         {
-            List<Order> todayOrder = FileIO.GetFromOrderFileByDate(DateTime.Today.Date);
-
-            foreach (Order order in todayOrder)
+            try
             {
-                new OrderListView(order).ShowOrderDetail();
+
+                List<Order> todayOrder = FileIO.GetFromOrderFileByDate(DateTime.Today.Date);
+
+                foreach (Order order in todayOrder)
+                {
+                    new OrderListView(order).ShowOrderDetail();
+                }
+
+            }
+            catch(Exception e)
+            {
+                new MessageView().Display(e.Message);
             }
 
             Console.ReadLine();
