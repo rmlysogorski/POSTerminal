@@ -13,3 +13,4 @@ bagel|food|1.99|Goes great with cream cheese!
 hot cocoa|beverage|1.49|A cup of hot chocolate.
 baklava|food|2.99|A middle eastern treat.
 bacon, egg & cheese croissant|food|4.99|A fresh baked croissant topped with bacon eggs & cheese.
+donut|food|1.99|Famous donut from Jamaica!
