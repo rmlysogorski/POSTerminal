@@ -1,4 +1,3 @@
-coffee|beverage|1.99|A cup of our delicious coffee.
 large coffee|beverage|2.49|Even more of our delicious coffee.
 decaf coffee|beverage|1.99|Same great taste sans caffeine.
 large decaf coffee|beverage|2.49|Even more delicious coffee without caffeine.
@@ -6,11 +5,10 @@ brownie|food|1.99|A tasty brownie like mom used to bake!
 cookie|food|1.99|A warm, soft freshly baked chocolate chip cookie.
 muffin|food|2.49|A fresh muffin baked this morning!
 sandwich|food|4.99|Today's special sandwich!
-tea|beverage|1.49|Perfect for tea time!
 decaf tea|beverage|1.49|Relax at tea time without the caffeine.
 bottled water|beverage|1.25|Gotta stay hydrated!
 bagel|food|1.99|Goes great with cream cheese!
 hot cocoa|beverage|1.49|A cup of hot chocolate.
 baklava|food|2.99|A middle eastern treat.
 bacon, egg & cheese croissant|food|4.99|A fresh baked croissant topped with bacon eggs & cheese.
-donut|food|1.99|Famous donut from Jamaica!
+coffee|beverage|1.99|A cup of freshly roasted coffee.

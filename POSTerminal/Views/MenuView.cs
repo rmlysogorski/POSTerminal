@@ -15,7 +15,8 @@ namespace POSTerminal
             Console.WriteLine("1: Checkout");
             Console.WriteLine("2: Sales History (Today's)");
             Console.WriteLine("3: Add a New Product");
-            Console.WriteLine("4: Quit");
+            Console.WriteLine("4: Remove a Product");
+            Console.WriteLine("5: Quit");
             Console.Write("\nMake a selection: ");
         }
     }
