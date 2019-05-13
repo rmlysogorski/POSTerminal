@@ -54,12 +54,13 @@ namespace POSTerminal
                     case 2:
                         SalesHistoryAction();
                         break;
-
                     case 3:
                         AddToProductFile();
                         break;
-
                     case 4:
+                        RemoveFromFile();
+                        break;
+                    case 5:
                         new MessageView().Display("Are you sure (Y/N)? ");
 
                         if (UserInput.UserConfirmationPrompt(""))
@@ -136,7 +137,7 @@ namespace POSTerminal
 
             view.Display("1: Search By Name\n2: Search By Category\n3: List All Products\n4: Go Back\n\nMake a selection: ");
 
-            
+
             bool goBack = false;
 
             while (!goBack)
@@ -205,7 +206,7 @@ namespace POSTerminal
                                     break;
                             }
                         } while (!proceed);
-                        
+
                         ProductListView filteredListByCat = new ProductListView(productListView.GetFilteredList("category", category));
                         filteredListByCat.Display();
 
@@ -243,7 +244,7 @@ namespace POSTerminal
                             input = UserInput.GetUserInputAsInteger("");
                         }
                         while (!IsItemInProductList(input, 0, productList.Count));
-                        
+
                         input--;
 
                         view.Display("Enter Quantity: ");
@@ -276,10 +277,10 @@ namespace POSTerminal
 
         }
 
-        private bool IsItemInProductList(int num,int min, int max)
+        private bool IsItemInProductList(int num, int min, int max)
         {
-            
-            if(num <= min || num > max)
+
+            if (num <= min || num > max)
             {
                 return false;
             }
@@ -358,7 +359,7 @@ namespace POSTerminal
                 view.Display("Input payment type: ");
                 input = UserInput.GetUserInputAsInteger("");
             } while (!IsItemInProductList(input, 0, 3));
-            
+
             switch (input)
             {
                 case 1: //Cash - Get amount tendered and calculate change
@@ -502,6 +503,34 @@ namespace POSTerminal
             else
             {
                 view.Display("The new product was not added to the database.");
+            }
+
+        }
+
+        public void RemoveFromFile()
+        {
+            IView removeProductView = new Views.RemoveProductView(productList);
+            removeProductView.Display();
+            IMessage view = new MessageView();
+            int input;
+            do
+            {
+                view.Display($"\nWhich product would you like to delete? (1-{productList.Count})");
+                input = UserInput.GetUserInputAsInteger("");
+            } while (input < 1 || input > productList.Count);
+
+            view.Display($"You are about to delete the following item: {productList[input - 1].Name}");
+            view.Display("\nProceed? (y/n): ");
+            string proceedString = string.Empty;
+            while (proceedString != "y" && proceedString != "n")
+            {
+                proceedString = Console.ReadLine();
+            }
+
+            if (proceedString == "y")
+            {
+                FileIO.RemoveLineFromFile(input - 1);
+                view.Display("The item was removed!");
             }
 
         }

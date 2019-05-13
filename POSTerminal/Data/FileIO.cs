@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Security.Permissions;
 
 namespace POSTerminal
@@ -14,9 +15,9 @@ namespace POSTerminal
 
 
             string fileName = @"..\\..\\Data\\productList.txt";
-            string binaryPath = AppDomain.CurrentDomain.BaseDirectory + fileName;                      
+            string binaryPath = AppDomain.CurrentDomain.BaseDirectory + fileName;
 
-                      
+
 
             StreamReader myFile = new StreamReader(binaryPath);
 
@@ -79,7 +80,7 @@ namespace POSTerminal
 
                 while ((line = myFile.ReadLine()) != null)
                 {
-                    if(DateTime.Parse(line.Split('|')[4]).Date == DateTime.Today.Date)
+                    if (DateTime.Parse(line.Split('|')[4]).Date == DateTime.Today.Date)
                     {
                         OrderList.Add(GetOrderFromLine(line.Split(';')));
                     }
@@ -135,7 +136,7 @@ namespace POSTerminal
 
                 return order;
             }
-            catch(Exception)
+            catch (Exception)
             {
                 throw new Exception("Was not able to read orderList.txt");
             }
@@ -159,7 +160,7 @@ namespace POSTerminal
 
                 return int.Parse(lastLine.Split('|')[0]);
             }
-            catch(Exception)
+            catch (Exception)
             {
                 return 0;
             }
@@ -186,7 +187,7 @@ namespace POSTerminal
                     }
                 }
 
-                productsToWrite += productDelimiter;                
+                productsToWrite += productDelimiter;
 
                 string payInfoToWrite = "";
 
@@ -209,6 +210,42 @@ namespace POSTerminal
             {
                 throw new System.Exception("There was an error writing to product list files...");
             }
+        }
+
+        public static void RemoveLineFromFile(int index)
+        {
+            string fileName = @"..\\..\\Data\\productList.txt";
+            string binaryPath = AppDomain.CurrentDomain.BaseDirectory + fileName;
+
+            try
+            {
+                List<string> linesList = File.ReadAllLines(binaryPath).ToList();
+                linesList.RemoveAt(index);
+                using (StreamWriter sw = new StreamWriter(binaryPath))
+                {
+                    int count = 0;
+                    foreach (string line in linesList)
+                    {
+                        if (count < linesList.Count - 1)
+                        {
+                            sw.WriteLine(line);
+                        }
+                        else
+                        {
+                            sw.Write(line);
+                        }
+                        count++;
+                    }
+
+                }
+
+            }
+            catch (Exception e)
+            {
+                IMessage view = new MessageView();
+                view.Display(e.Message);
+            }
+
         }
     }
 }
