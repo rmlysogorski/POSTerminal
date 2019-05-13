@@ -40,6 +40,11 @@ namespace POSTerminal
             }
             try
             {
+                if (int.Parse(input) <= 0)
+                {
+                    return GetUserInputAsInteger(message);
+                }
+
                 return int.Parse(input);
             }
             catch (Exception)
