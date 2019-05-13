@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace POSTerminal
 {
-    class OrderListView :IView
+    class OrderListView : IView
     {
         private Order myOrder;
 
@@ -24,8 +24,8 @@ namespace POSTerminal
         public void ShowOrderDetail()
         {
 
-            Console.WriteLine($"\n\nOrder#: {myOrder.OrderNumber} | Date: {myOrder.Date} | Total: {myOrder.Total} | PayType: {myOrder.PayInfo.PayType}");
-            foreach(Product p in myOrder.PurchaseList)
+            Console.WriteLine($"\n\nOrder#: {myOrder.OrderNumber} | Date: {myOrder.Date} | Total: {myOrder.Total:C2} | PayType: {myOrder.PayInfo.PayType}");
+            foreach (Product p in myOrder.PurchaseList)
             {
                 Console.Write($"{p.Name}({p.Qty}) @{p.Price:C2} ");
             }
@@ -33,14 +33,14 @@ namespace POSTerminal
 
         public void Display()
         {
-            string headers = string.Format("{0,-6}{1,-31}{2,-5}{3,-10}","Item#", "Name", "Qty", "Price");
+            string headers = string.Format("{0,-6}{1,-31}{2,-5}{3,-10}", "Item#", "Name", "Qty", "Price");
             string items;
 
             if (myOrder.PurchaseList.Count > 0)
             {
                 Console.WriteLine(headers);
 
-                for(int i = 0; i < myOrder.PurchaseList.Count; i++)
+                for (int i = 0; i < myOrder.PurchaseList.Count; i++)
                 {
                     items = string.Format("{0,-6}{1,-31}{2,-5}{3,-10:C2}",
                     i + 1,
