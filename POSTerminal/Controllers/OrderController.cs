@@ -380,24 +380,24 @@ namespace POSTerminal
                     string cancel = string.Empty;
                     do
                     {
+                        cancel = string.Empty;
                         myOrder.PayInfo.PayType = POSTerminal.PayType.Credit;
                         view.Display(myOrder.PayInfo.CreditCardNumberMessage);
                         myOrder.PayInfo.CardNumber = UserInput.GetCreditCardNumber().Replace(" ", "");
                         view.Display(myOrder.PayInfo.ExpirationDateMessage);
                         myOrder.PayInfo.ExpirationDate = UserInput.GetCreditCardExpiration();
-                        if (myOrder.PayInfo.ExpirationDate.Year >= DateTime.Now.Year)
+                        if ((myOrder.PayInfo.ExpirationDate.Year == DateTime.Now.Year && myOrder.PayInfo.ExpirationDate.Month < DateTime.Now.Month)
+                            || myOrder.PayInfo.ExpirationDate.Year < DateTime.Now.Year)
                         {
-                            if (myOrder.PayInfo.ExpirationDate.Month < DateTime.Now.Month)
-                            {
-                                view.Display("This credit card has expired.");
-                                view.Display("Enter r to re-enter the credit card information, enter c to cancel the order: ");
-                                cancel = UserInput.GetUserInput("");
-                                if (cancel.ToLower() != "r")
-                                {
-                                    return;
-                                }
 
+                            view.Display("This credit card has expired.");
+                            view.Display("Enter r to re-enter the credit card information, enter c to cancel the order: ");
+                            cancel = UserInput.GetUserInput("");
+                            if (cancel.ToLower() != "r")
+                            {
+                                return;
                             }
+
                         }
                     } while (cancel.ToLower() == "r");
 
